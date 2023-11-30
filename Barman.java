@@ -2,11 +2,6 @@ import java.util.List;
 
 public class Barman extends Employee {
 
-    // Constructeur
-    public Barman(String nom, String prenom, int age) {
-        super();
-    }
-
     // Méthode pour préparer les boissons d'une commande
     public void prepareBoissons(Order order) {
         List<Boisson> boissonsApreparer = order.getBoissons();
