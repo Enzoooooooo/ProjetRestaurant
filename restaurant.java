@@ -2,8 +2,9 @@ import java.util.List;
 
 
 class Restaurant {
-    private List<Employee> employees;
-    private List<Table> tables;
-    private Stock stock;
-    private List<Order> orders;
+    public List<Employee> employees;
+    public List<Table> tables;
+    public Stock stock;
+    public List<Order> orders;
+    public boolean clean;
 }
