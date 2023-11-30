@@ -4,7 +4,13 @@ import java.util.List;
 class Aliment {
     private String name;
     private int quantity;
+    public void increaseQuantity(int amount) {
+        this.quantity += amount;
+    }
 
+    public void decreaseQuantity(int amount) {
+        this.quantity -= amount;
+    }
     /**
      * @return String return the name
      */
