@@ -3,7 +3,7 @@ import java.util.List;
 class Boisson {
     private String name;
     private int quantity;
-    private float prix;
+    public float prix;
 
     public void increaseQuantity(int amount) {
         this.quantity += amount;
@@ -20,6 +20,7 @@ class Boisson {
     public void setName(String name) {
         this.name = name;
     }
+
     public void getPrix(float prix){
         this.prix = prix;
     }
