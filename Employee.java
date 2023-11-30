@@ -2,10 +2,19 @@ import java.util.List;
 
 
 class Employee {
-    private String name;
-    private int id;
-    private int salaire;
-    private boolean isWorking;
+    public String name;
+    public int id;
+    public int salaire;
+    public String role;
+    public boolean isWorking;
+
+    public String getRole(){
+        return role;
+    }
+
+    public void setRole(String role){
+        this.role = role;
+    }
 
     // Getter pour le nom
     public String getName() {
