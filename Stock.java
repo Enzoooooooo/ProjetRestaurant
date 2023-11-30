@@ -1,38 +1,25 @@
 import java.util.List;
+import java.util.ArrayList;
 
 
 class Stock {
-    private List<Aliment> aliments;
-    private List<Boisson> boissons;
+    private List<Aliment> aliments = new ArrayList<>();
+    private List<Boisson> boissons = new ArrayList<>();
 
-    public void addIngredient(Ingredient ingredient) {
-        if (ingredient instanceof Aliment) {
-            aliments.add((Aliment) ingredient);
-        } else if (ingredient instanceof Boisson) {
-            boissons.add((Boisson) ingredient);
-        }
+    public void addAliment(Aliment aliment) {
+        aliments.add(aliment);
     }
 
-    public void removeIngredient(Ingredient ingredient) {
-        if (ingredient instanceof Aliment) {
-            aliments.remove((Aliment) ingredient);
-        } else if (ingredient instanceof Boisson) {
-            boissons.remove((Boisson) ingredient);
-        }
+    public void addBoisson(Boisson boisson) {
+        boissons.add(boisson);
     }
 
-    public Ingredient findIngredientByName(String name) {
-        for (Aliment aliment : aliments) {
-            if (aliment.getName().equals(name)) {
-                return aliment;
-            }
-        }
-        for (Boisson boisson : boissons) {
-            if (boisson.getName().equals(name)) {
-                return boisson;
-            }
-        }
-        return null;
+    public void removeAliment(String name) {
+        aliments.removeIf(aliment -> aliment.getName().equals(name));
+    }
+
+    public void removeBoisson(String name) {
+        boissons.removeIf(boisson -> boisson.getNom().equals(name));
     }
 
     /**
