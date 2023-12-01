@@ -7,6 +7,11 @@ class Order {
     private int tableNumber;
     private boolean pret;
 
+
+    public static void prendreCommande(){
+        
+    }
+
     // Constructeur
     public Order(int tableNumber) {
         this.plats = new ArrayList<>();

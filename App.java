@@ -63,7 +63,7 @@ public class App {
         while (continuer) {
             System.out.println("Ecran Prise de commande");
             System.out.println("1- Afficher le menu");
-            System.out.println("2- ");
+            System.out.println("2- Prendre Commande");
             System.out.println("3- ");
             System.out.println("4- Revenir menu principal");
     
@@ -84,6 +84,7 @@ public class App {
                     menu.afficherMenu();
                     break;
                 case 2:
+                    
                     break;
                 case 3:
                     break;
