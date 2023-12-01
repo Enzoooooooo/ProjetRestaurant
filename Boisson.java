@@ -21,7 +21,23 @@ class Boisson {
         this.name = name;
     }
 
-    public void getPrix(float prix){
+    public void setPrix(float prix) {
         this.prix = prix;
     }
+
+    public float getPrix(){
+        return prix;
+    }
+
+    /**
+     * @return int return the quantity
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 }

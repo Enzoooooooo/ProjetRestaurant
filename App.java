@@ -26,9 +26,7 @@ public class App {
 
             switch (choixEcran) {
                 case 1:
-                    // Logique pour l'écran de prise de commande
-                    System.out.println("Affichage de l'écran de prise de commande");
-                    // Ici, vous pouvez ajouter votre code spécifique pour cet écran
+                    gererPriseCommande(SummerEat, scanner);
                     break;
                 case 2:
                     // Logique pour l'écran de cuisine
@@ -57,6 +55,45 @@ public class App {
             System.out.println("Une erreur est survenue lors de la lecture de votre choix. Assurez-vous d'entrer un nombre.");
         }
     
+    }
+
+    private static void gererPriseCommande(Restaurant restaurant, Scanner scanner) {
+        boolean continuer = true;
+    
+        while (continuer) {
+            System.out.println("Ecran Prise de commande");
+            System.out.println("1- Afficher le menu");
+            System.out.println("2- ");
+            System.out.println("3- ");
+            System.out.println("4- Revenir menu principal");
+    
+            if (!scanner.hasNextInt()) {
+                System.out.println("Veuillez entrer un nombre valide.");
+                scanner.next(); // Consomme l'entrée non valide
+                continue; // Continue la boucle pour demander de nouveau l'entrée
+            }
+
+            int choixCommande = scanner.nextInt();
+            scanner.nextLine(); // Nettoie le buffer
+    
+            switch (choixCommande) {
+                case 1:
+                    // Créer un menu à partir de MenuData
+                    Menu menu = defMenu.createMenu();
+                    // Afficher le menu
+                    menu.afficherMenu();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    continuer = false; // Sort de la boucle, retour au menu principal
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
+            }
+        }
     }
     
 
