@@ -46,10 +46,10 @@ class Order {
     public double getTotal() {
         double total = 0;
         for (Plat plat : plats) {
-            total += plat.getPrix();
+            total += plat.prix;
         }
         for (Boisson boisson : boissons) {
-            total += boisson.getPrix();
+            total += boisson.prix;
         }
         return total;
     }
