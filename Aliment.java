@@ -11,6 +11,7 @@ class Aliment {
     public void decreaseQuantity(int amount) {
         this.quantity -= amount;
     }
+    
     /**
      * @return String return the name
      */
