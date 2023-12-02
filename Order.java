@@ -7,9 +7,8 @@ class Order {
     private int tableNumber;
     private boolean pret;
 
+    public static void prendreCommande() {
 
-    public static void prendreCommande(){
-        
     }
 
     // Constructeur
@@ -74,9 +73,9 @@ class Order {
     public List<Boisson> getBoissons() {
         return boissons;
     }
+
     // Marquer la commande comme prête
     public void marquerCommePret() {
         setPret(true);
     }
 }
-

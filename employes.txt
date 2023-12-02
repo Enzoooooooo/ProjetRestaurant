@@ -1,0 +1,2 @@
+1,enzo,20,Barman,false
+2,enwo,30,Cuisinier,false
