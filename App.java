@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) {
@@ -66,18 +68,11 @@ public class App {
         while (continuer) {
             System.out.println("Ecran Prise de commande");
             System.out.println("1- Afficher le menu");
-            System.out.println("2- Prendre Commande");
+            System.out.println("2- Sélectionner un serveur pour prendre commande");
             System.out.println("3- ");
-            System.out.println("4- Revenir menu principal");
+            System.out.println("4- Revenir au menu principal");
 
-            if (!scanner.hasNextInt()) {
-                System.out.println("Veuillez entrer un nombre valide.");
-                scanner.next(); // Consomme l'entrée non valide
-                continue; // Continue la boucle pour demander de nouveau l'entrée
-            }
-
-            int choixCommande = scanner.nextInt();
-            scanner.nextLine(); // Nettoie le buffer
+            int choixCommande = lireChoix(scanner);
 
             switch (choixCommande) {
                 case 1:
@@ -87,9 +82,10 @@ public class App {
                     menu.afficherMenu();
                     break;
                 case 2:
-
+                    selectionnerServeurEtPrendreCommande(restaurant, scanner);
                     break;
                 case 3:
+                    // Autres options si nécessaire
                     break;
                 case 4:
                     continuer = false; // Sort de la boucle, retour au menu principal
@@ -98,6 +94,38 @@ public class App {
                     System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
             }
         }
+    }
+
+    private static void selectionnerServeurEtPrendreCommande(Restaurant restaurant, Scanner scanner) {
+        // Affichage et sélection des serveurs
+        System.out.println("Sélectionnez un serveur :");
+        List<Serveur> serveurs = restaurant.getEmployees().stream()
+                .filter(e -> e instanceof Serveur)
+                .map(e -> (Serveur) e)
+                .collect(Collectors.toList());
+
+        if (serveurs.isEmpty()) {
+            System.out.println("Aucun serveur disponible.");
+            return;
+        }
+
+        for (int i = 0; i < serveurs.size(); i++) {
+            System.out.println((i + 1) + " - " + serveurs.get(i).getName());
+        }
+
+        int choixServeur = lireChoix(scanner);
+        if (choixServeur < 1 || choixServeur > serveurs.size()) {
+            System.out.println("Choix invalide.");
+            return;
+        }
+
+        Serveur serveurChoisi = serveurs.get(choixServeur - 1);
+        System.out.println("Serveur choisi : " + serveurChoisi.getName());
+        System.out.println("Tables assignées : " + serveurChoisi.getTablesAssignees());
+
+        // Ici, vous pouvez ajouter la logique pour prendre une commande pour une des
+        // tables assignées
+        // ...
     }
 
     private static void gererEcranMonitoring(Restaurant restaurant, Scanner scanner) {

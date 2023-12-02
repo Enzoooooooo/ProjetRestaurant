@@ -1,22 +1,22 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
-
+import java.util.Scanner;
+import java.util.ArrayList;
 
 class Serveur extends Employee {
-    private List<Table> tables;
+    private List<Integer> tablesAssignees;
 
-    public void prendreCommande() {
-        // Implémenter la logique
+    public Serveur() {
+        this.tablesAssignees = new ArrayList<>();
     }
 
-    public void ajouterTable() {
-        // Implémenter la logique
+    public List<Integer> getTablesAssignees() {
+        return tablesAssignees;
     }
 
-    public void supprimerTable() {
-        // Implémenter la logique
-    }
-
-    public void amenerCommande() {
-        // Implémenter la logique
+    public void setTablesAssignees(List<Integer> tablesAssignees) {
+        this.tablesAssignees = tablesAssignees;
     }
 }
