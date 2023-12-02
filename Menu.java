@@ -26,7 +26,15 @@ class Menu {
         }
         System.out.println("Boissons:");
         for (Boisson boisson : boissons) {
-            System.out.println(" - " + boisson.getNom() + " : " + boisson.getPrix() + " euros " );
+            System.out.println(" - " + boisson.getNom() + " : " + boisson.getPrix() + " euros ");
         }
+    }
+
+    public List<Plat> getPlats() {
+        return plats;
+    }
+
+    public List<Boisson> getBoissons() {
+        return boissons;
     }
 }

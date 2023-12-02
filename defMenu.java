@@ -69,12 +69,12 @@ public class defMenu {
         boisson2.setPrix(5f);
         menu.ajouterBoisson(boisson2);
 
-         Boisson boisson3 = new Boisson();
+        Boisson boisson3 = new Boisson();
         boisson3.setName("Bière sans alcool");
         boisson3.setPrix(5f);
         menu.ajouterBoisson(boisson3);
 
-         Boisson boisson4 = new Boisson();
+        Boisson boisson4 = new Boisson();
         boisson4.setName("Jus de fruit");
         boisson4.setPrix(1f);
         menu.ajouterBoisson(boisson4);

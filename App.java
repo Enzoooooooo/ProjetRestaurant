@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.Iterator;
 
 public class App {
     public static void main(String[] args) {
@@ -25,7 +28,8 @@ public class App {
                 System.out.println("2- Ecran cuisine");
                 System.out.println("3- Ecran bar");
                 System.out.println("4- Ecran Monitoring");
-                System.out.println("5- Quitter");
+                System.out.println("5- Assigner une table");
+                System.out.println("6- Quitter");
                 int choixEcran = lireChoix(scanner);
 
                 switch (choixEcran) {
@@ -48,6 +52,9 @@ public class App {
                         // scanner.close();
                         break;
                     case 5:
+                        Table.assignerTable(SummerEat, scanner);
+                        break;
+                    case 6:
                         System.out.println("Fermeture du programme.");
                         continuer = false;
                         break;
@@ -123,9 +130,85 @@ public class App {
         System.out.println("Serveur choisi : " + serveurChoisi.getName());
         System.out.println("Tables assignées : " + serveurChoisi.getTablesAssignees());
 
-        // Ici, vous pouvez ajouter la logique pour prendre une commande pour une des
-        // tables assignées
-        // ...
+        // Choix de la table
+        System.out.println("Choisissez une table pour prendre la commande:");
+        int choixTable = lireChoix(scanner);
+
+        // Vérifier si la table choisie est dans la liste des tables assignées au
+        // serveur
+        if (!serveurChoisi.getTablesAssignees().contains(choixTable)) {
+            System.out.println("Cette table n'est pas assignée au serveur sélectionné.");
+            return;
+        }
+
+        // Afficher le menu
+        Menu menu = defMenu.createMenu();
+        menu.afficherMenu();
+
+        // Créer une nouvelle commande
+        Order commande = new Order(choixTable);
+
+        // Boucle pour ajouter des plats et des boissons à la commande
+        boolean prendreCommande = true;
+        while (prendreCommande) {
+            System.out.println("Ajouter à la commande:");
+            System.out.println("1 - Plat");
+            System.out.println("2 - Boisson");
+            System.out.println("3 - Terminer la commande");
+            int choixCommande = lireChoix(scanner);
+
+            switch (choixCommande) {
+                case 1:
+                    // Afficher la liste des plats
+                    System.out.println("Liste des plats disponibles :");
+                    for (int i = 0; i < menu.getPlats().size(); i++) {
+                        Plat plat = menu.getPlats().get(i);
+                        System.out.println((i + 1) + " - " + plat.getName() + " : " + plat.getPrix() + " euros");
+                    }
+
+                    System.out.println("Choisissez un plat à ajouter à la commande (entrez le numéro) :");
+                    int choixPlat = lireChoix(scanner);
+
+                    if (choixPlat < 1 || choixPlat > menu.getPlats().size()) {
+                        System.out.println("Choix de plat non valide.");
+                    } else {
+                        Plat platChoisi = menu.getPlats().get(choixPlat - 1);
+                        commande.addPlat(platChoisi);
+                        System.out.println(platChoisi.getName() + " ajouté à la commande.");
+                    }
+                    break;
+
+                case 2:
+                    // Afficher la liste des boissons
+                    System.out.println("Liste des boissons disponibles :");
+                    for (int i = 0; i < menu.getBoissons().size(); i++) {
+                        Boisson boisson = menu.getBoissons().get(i);
+                        System.out.println((i + 1) + " - " + boisson.getNom() + " : " + boisson.getPrix() + " euros");
+                    }
+
+                    System.out.println("Choisissez une boisson à ajouter à la commande (entrez le numéro) :");
+                    int choixBoisson = lireChoix(scanner);
+
+                    if (choixBoisson < 1 || choixBoisson > menu.getBoissons().size()) {
+                        System.out.println("Choix de boisson non valide.");
+                    } else {
+                        Boisson boissonChoisie = menu.getBoissons().get(choixBoisson - 1);
+                        commande.addBoisson(boissonChoisie);
+                        System.out.println(boissonChoisie.getNom() + " ajoutée à la commande.");
+                    }
+                    break;
+                case 3:
+                    prendreCommande = false;
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 3.");
+            }
+        }
+
+        // Ajouter la commande à la liste des commandes du restaurant
+        restaurant.getOrders().add(commande);
+        System.out.println("Commande enregistrée pour la table " + choixTable + ".");
+        commande.afficherCommande();
     }
 
     private static void gererEcranMonitoring(Restaurant restaurant, Scanner scanner) {
@@ -136,7 +219,9 @@ public class App {
             System.out.println("1- Gérer les employés du jour");
             System.out.println("2- Ajouter un employé");
             System.out.println("3- Supprimer un employé");
-            System.out.println("4- Retour au menu principal");
+            System.out.println("4- Ajouter une table");
+            System.out.println("5- Supprimer une table");
+            System.out.println("6- Retour au menu principal");
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Veuillez entrer un nombre valide.");
@@ -158,6 +243,12 @@ public class App {
                     Employee.supprimerEmploye(restaurant, scanner);
                     break;
                 case 4:
+                    Table.ajouterTable(restaurant, scanner);
+                    break;
+                case 5:
+                    Table.supprimerTable(restaurant, scanner);
+                    break;
+                case 6:
                     continuer = false; // Sort de la boucle, retour au menu principal
                     break;
                 default:
@@ -166,7 +257,7 @@ public class App {
         }
     }
 
-    private static int lireChoix(Scanner scanner) {
+    public static int lireChoix(Scanner scanner) {
         while (!scanner.hasNextInt()) {
             System.out.println("Veuillez entrer un nombre valide.");
             scanner.next(); // Consomme l'entrée non valide

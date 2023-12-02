@@ -12,6 +12,16 @@ class Serveur extends Employee {
         this.tablesAssignees = new ArrayList<>();
     }
 
+    // Ajouter une table assignée
+    public void ajouterTableAssignee(int numeroTable) {
+        this.tablesAssignees.add(numeroTable);
+    }
+
+    // Retirer une table assignée
+    public void retirerTableAssignee(int numeroTable) {
+        this.tablesAssignees.remove(Integer.valueOf(numeroTable));
+    }
+
     public List<Integer> getTablesAssignees() {
         return tablesAssignees;
     }
