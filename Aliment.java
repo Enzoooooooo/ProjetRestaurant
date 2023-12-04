@@ -1,9 +1,9 @@
 import java.util.List;
 
-
 class Aliment {
     private String name;
     private int quantity;
+
     public void increaseQuantity(int amount) {
         this.quantity += amount;
     }
@@ -11,7 +11,7 @@ class Aliment {
     public void decreaseQuantity(int amount) {
         this.quantity -= amount;
     }
-    
+
     /**
      * @return String return the name
      */
@@ -40,4 +40,8 @@ class Aliment {
         this.quantity = quantity;
     }
 
+    @Override
+    public String toString() {
+        return name + " (Quantité: " + quantity + ")";
+    }
 }

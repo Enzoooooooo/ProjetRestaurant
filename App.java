@@ -1,10 +1,16 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.Iterator;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class App {
     public static void main(String[] args) {
@@ -17,11 +23,10 @@ public class App {
         // si pas commenté
         // sinon
         SummerEat.setTables(new ArrayList<Table>());
-        SummerEat.setStock(new Stock()); // Assurez-vous que Stock est correctement défini
+        // Charge mon Stock de stock.txt
+        SummerEat.setStock(chargerStock());
         SummerEat.setOrders(new ArrayList<Order>());
         SummerEat.setClean(true);
-
-        
         try (Scanner scanner = new Scanner(System.in)) {
             if (Employee.gererEmployes(SummerEat, scanner)) {
            Employee.gererEmployes(SummerEat, scanner);
@@ -332,7 +337,8 @@ public class App {
             System.out.println("3- Supprimer un employé");
             System.out.println("4- Ajouter une table");
             System.out.println("5- Supprimer une table");
-            System.out.println("6- Retour au menu principal");
+            System.out.println("6- Gérer le stock");
+            System.out.println("7- Retour au menu principal");
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Veuillez entrer un nombre valide.");
@@ -360,6 +366,10 @@ public class App {
                     Table.supprimerTable(restaurant, scanner);
                     break;
                 case 6:
+                    gererStock(restaurant, scanner);
+                    break;
+
+                case 7:
                     continuer = false; // Sort de la boucle, retour au menu principal
                     break;
                 default:
@@ -376,6 +386,162 @@ public class App {
         int choix = scanner.nextInt();
         scanner.nextLine(); // Nettoie le buffer après la lecture d'un int
         return choix;
+    }
+
+    // Menu Stock
+    private static void gererStock(Restaurant restaurant, Scanner scanner) {
+        boolean continuer = true;
+        while (continuer) {
+            System.out.println("Gérer le stock");
+            System.out.println("1- Ajouter du stock");
+            System.out.println("2- Voir le stock");
+            System.out.println("3- Retour");
+
+            int choixStock = lireChoix(scanner);
+
+            switch (choixStock) {
+                case 1:
+                    ajouterAuStock(restaurant, scanner);
+                    break;
+                case 2:
+                    voirStock(restaurant);
+                    break;
+                case 3:
+                    continuer = false;
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 3.");
+            }
+        }
+    }
+
+    // Méthode pour ajouter aux stock
+    private static void ajouterAuStock(Restaurant restaurant, Scanner scanner) {
+        System.out.println("Voulez-vous ajouter un aliment ou une boisson?");
+        System.out.println("1- Aliment");
+        System.out.println("2- Boisson");
+
+        int choix = lireChoix(scanner);
+        String nom;
+        int quantite;
+
+        switch (choix) {
+            case 1:
+                nom = choisirAliment(scanner);
+                if (nom == null)
+                    return; // Si le nom n'est pas valide, on sort de la méthode
+                System.out.println("Entrez la quantité:");
+                quantite = lireChoix(scanner); // Supposons que la quantité est un entier
+                Aliment nouvelAliment = new Aliment();
+                nouvelAliment.setName(nom);
+                nouvelAliment.setQuantity(quantite);
+                restaurant.getStock().addAliment(nouvelAliment);
+                break;
+            case 2:
+                nom = choisirBoisson(scanner);
+                if (nom == null)
+                    return; // Si le nom n'est pas valide, on sort de la méthode
+                System.out.println("Entrez la quantité:");
+                quantite = lireChoix(scanner); // Supposons que la quantité est un entier
+                Boisson nouvelBoisson = new Boisson();
+                nouvelBoisson.setName(nom);
+                nouvelBoisson.setQuantity(quantite);
+                restaurant.getStock().addBoisson(nouvelBoisson);
+                break;
+            default:
+                System.out.println("Choix non valide.");
+        }
+
+        sauvegarderStock(restaurant.getStock());
+    }
+
+    // Méthode pour choisir les aliments valide à ajouter dans mon stock
+    private static String choisirAliment(Scanner scanner) {
+        System.out.println("Entrez le nom de l'aliment:");
+        String nom = scanner.nextLine();
+        // Liste des noms d'aliments valides
+        List<String> nomsValides = Arrays.asList("Salade", "Tomate", "Potirons", "Champignons", "Pain", "Viande",
+                "Pate", "Fromage", "Saucisson");
+        if (nomsValides.contains(nom)) {
+            return nom;
+        } else {
+            System.out.println("Nom d'aliment non valide.");
+            return null;
+        }
+    }
+
+    // Méthode pour choisir les boisson valide à ajouter dans mon stock
+    private static String choisirBoisson(Scanner scanner) {
+        System.out.println("Entrez le nom de la boisson:");
+        String nom = scanner.nextLine();
+        // Liste des boissons valides
+        List<String> nomsValides = Arrays.asList("Jus de fruit", "Bierre", "Limonade", "Cidre");
+        if (nomsValides.contains(nom)) {
+            return nom;
+        } else {
+            System.out.println("Nom de Boisson non valide.");
+            return null;
+        }
+    }
+
+    // Méthode pour sauvegarder le stock
+    private static void sauvegarderStock(Stock stock) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("stock.txt"))) {
+            for (Aliment aliment : stock.getAliments()) {
+                writer.write("Aliment: " + aliment.getName() + " | Quantité: " + aliment.getQuantity() + "\n");
+            }
+
+            for (Boisson boisson : stock.getBoissons()) {
+                writer.write("Boisson: " + boisson.getNom() + " | Quantité: " + boisson.getQuantity() + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde du stock : " + e.getMessage());
+        }
+    }
+
+    // Méthode pour afficher le stock
+    private static void voirStock(Restaurant restaurant) {
+        System.out.println("Stock d'aliments :");
+        for (Aliment aliment : restaurant.getStock().getAliments()) {
+            System.out.println(aliment);
+        }
+        System.out.println("Stock de boissons :");
+        for (Boisson boisson : restaurant.getStock().getBoissons()) {
+            System.out.println(boisson);
+        }
+    }
+
+    // Méthode pour charger le stock
+    private static Stock chargerStock() {
+        Stock stock = new Stock();
+        try (BufferedReader reader = new BufferedReader(new FileReader("stock.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Aliment:")) {
+                    String[] parts = line.split("\\|");
+                    String nom = parts[0].split(":")[1].trim();
+                    int quantite = Integer.parseInt(parts[1].split(":")[1].trim());
+                    Aliment aliment = new Aliment();
+                    aliment.setName(nom);
+                    aliment.setQuantity(quantite);
+                    stock.addAliment(aliment);
+                }
+                if (line.startsWith("Boisson:")) {
+                    String[] parts = line.split("\\|");
+                    String nom = parts[0].split(":")[1].trim();
+                    int quantite = Integer.parseInt(parts[1].split(":")[1].trim());
+                    Boisson boisson = new Boisson();
+                    boisson.setName(nom);
+                    boisson.setQuantity(quantite);
+
+                    stock.addBoisson(boisson);
+                }
+
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors du chargement du stock : " + e.getMessage());
+        }
+        return stock;
     }
 
 }
