@@ -102,7 +102,28 @@ class Employee {
                 System.out.println("Choix non valide. Veuillez entrer un numéro correct.");
             }
         }
+        
+        
 
+    }
+
+    private static boolean verifierConditionEmployes(Restaurant restaurant) {
+        long nbServeurs = restaurant.getEmployees().stream()
+            .filter(e -> e instanceof Serveur && e.getIsWorking())
+            .count();
+        long nbCuisiniers = restaurant.getEmployees().stream()
+            .filter(e -> e instanceof Cuisinier && e.getIsWorking())
+            .count();
+        long nbBarmans = restaurant.getEmployees().stream()
+            .filter(e -> e instanceof Barman && e.getIsWorking())
+            .count();
+
+        if (nbServeurs >= 3 && nbCuisiniers >= 1 && nbBarmans >= 1) {
+            return true;
+        } else {
+            System.out.println("Condition non remplie: 3 serveurs, 1 cuisinier, et 1 barman requis.");
+            return false;
+        }
     }
 
     public static String determinerRoleEmploye(Employee employe) {
@@ -117,10 +138,10 @@ class Employee {
         }
     }
 
-    public static void gererEmployes(Restaurant restaurant, Scanner scanner) {
+    public static boolean gererEmployes(Restaurant restaurant, Scanner scanner) {
         if (restaurant.getEmployees().isEmpty()) {
             System.out.println("Il n'y a pas d'employés à gérer.");
-            return;
+            return false;
         }
 
         boolean continuerGestion = true;
@@ -149,7 +170,11 @@ class Employee {
             } else {
                 System.out.println("Choix non valide. Veuillez entrer un numéro correct.");
             }
+        if (verifierConditionEmployes(restaurant)) {
+            return true;
         }
+    }
+    return false;
     }
 
     public static void ajouterEmploye(Restaurant restaurant, Scanner scanner) {
@@ -200,4 +225,16 @@ class Employee {
         System.out.println("Employé ajouté avec succès !");
 
     }
+
+
+ public static void terminerJournee(Restaurant restaurant) {
+    
+        for (Employee employe : restaurant.getEmployees()) {
+            employe.setIsWorking(false);
+            restaurant.setClean(true);
+        }
+        restaurant.sauvegarderEmployes();
+        System.out.println("La journée est terminée. Tous les employés sont maintenant hors service, et le Summer-Eat est nettoyé");
+    }
+
 }
