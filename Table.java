@@ -110,6 +110,7 @@ class Table {
 
         System.out.println("Choisissez un serveur :");
         for (int i = 0; i < serveurs.size(); i++) {
+            if (serveurs.get(i).getIsWorking()==true)
             System.out.println((i + 1) + " - " + serveurs.get(i).getName());
         }
 

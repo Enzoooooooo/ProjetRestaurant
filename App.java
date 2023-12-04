@@ -27,8 +27,9 @@ public class App {
         SummerEat.setStock(chargerStock());
         SummerEat.setOrders(new ArrayList<Order>());
         SummerEat.setClean(true);
-
         try (Scanner scanner = new Scanner(System.in)) {
+            if (Employee.gererEmployes(SummerEat, scanner)) {
+           Employee.gererEmployes(SummerEat, scanner);
             boolean continuer = true;
             while (continuer) {
                 System.out.println("Quel écran souhaitez vous afficher?");
@@ -38,6 +39,7 @@ public class App {
                 System.out.println("4- Ecran Monitoring");
                 System.out.println("5- Assigner une table");
                 System.out.println("6- Quitter");
+                  System.out.println("7- Fin de journée");
                 int choixEcran = lireChoix(scanner);
 
                 switch (choixEcran) {
@@ -66,16 +68,22 @@ public class App {
                         System.out.println("Fermeture du programme.");
                         continuer = false;
                         break;
+                    case 7:
+                        
+                        Employee.terminerJournee(SummerEat);
+                        continuer = false;
+                        break;
                     default:
                         System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
+                    }
                 }
+                } else {
+                    System.out.println("Le nombre minimum d'employés requis n'a pas été atteint.");
+                }
+            } catch (Exception e) {
+                System.out.println("Une erreur est survenue : " + e.getMessage());
             }
-        } catch (Exception e) {
-            System.out.println(
-                    "Une erreur est survenue lors de la lecture de votre choix. Assurez-vous d'entrer un nombre.");
         }
-
-    }
 
     private static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
         System.out.println("Ecran Cuisine - Commandes de plats en cours :");
@@ -225,6 +233,7 @@ public class App {
         }
 
         for (int i = 0; i < serveurs.size(); i++) {
+            if (serveurs.get(i).getIsWorking()==true)
             System.out.println((i + 1) + " - " + serveurs.get(i).getName());
         }
 
