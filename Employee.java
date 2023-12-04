@@ -118,7 +118,7 @@ class Employee {
             .filter(e -> e instanceof Barman && e.getIsWorking())
             .count();
 
-        if (nbServeurs >= 3 && nbCuisiniers >= 1 && nbBarmans >= 1) {
+        if (nbServeurs > 2 && nbCuisiniers >= 1 && nbBarmans >= 1) {
             return true;
         } else {
             System.out.println("Condition non remplie: 3 serveurs, 1 cuisinier, et 1 barman requis.");

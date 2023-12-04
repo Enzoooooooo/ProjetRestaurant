@@ -28,8 +28,9 @@ public class App {
         SummerEat.setOrders(new ArrayList<Order>());
         SummerEat.setClean(true);
         try (Scanner scanner = new Scanner(System.in)) {
-            if (Employee.gererEmployes(SummerEat, scanner)) {
+            
            Employee.gererEmployes(SummerEat, scanner);
+           if (Employee.gererEmployes(SummerEat, scanner)) {
             boolean continuer = true;
             while (continuer) {
                 System.out.println("Quel écran souhaitez vous afficher?");
