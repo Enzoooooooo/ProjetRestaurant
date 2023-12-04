@@ -1,7 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
 
-
 class Stock {
     private List<Aliment> aliments = new ArrayList<>();
     private List<Boisson> boissons = new ArrayList<>();

@@ -126,4 +126,16 @@ class Restaurant {
         }
     }
 
+    public Serveur trouverServeurPourTable(Restaurant restaurant, int tableNumber) {
+        for (Employee employe : restaurant.getEmployees()) {
+            if (employe instanceof Serveur) {
+                Serveur serveur = (Serveur) employe;
+                if (serveur.getTablesAssignees().contains(tableNumber)) {
+                    return serveur; // Serveur trouvé
+                }
+            }
+        }
+        return null; // Aucun serveur n'est assigné à cette table
+    }
+
 }

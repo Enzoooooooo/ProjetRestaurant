@@ -1,6 +1,5 @@
 import java.util.List;
 
-
 class Plat {
     private String name;
     private List<Aliment> aliments;
@@ -16,8 +15,8 @@ class Plat {
     public void setPrix(float prix) {
         this.prix = prix;
     }
-    
-    public float getPrix(){
+
+    public float getPrix() {
         return prix;
     }
 
@@ -34,7 +33,6 @@ class Plat {
     public List<Aliment> getAliments() {
         return aliments;
     }
-    
 
     /**
      * @param aliments the aliments to set
@@ -44,5 +42,3 @@ class Plat {
     }
 
 }
-
- 
