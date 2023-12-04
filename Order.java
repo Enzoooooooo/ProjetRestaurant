@@ -74,6 +74,10 @@ class Order {
         return boissons;
     }
 
+    public List<Plat> getPlats() {
+        return plats;
+    }
+
     // Marquer la commande comme prête
     public void marquerCommePret() {
         setPret(true);
