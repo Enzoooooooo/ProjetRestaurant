@@ -431,24 +431,46 @@ public class App {
             case 1:
                 nom = choisirAliment(scanner);
                 if (nom == null)
-                    return; // Si le nom n'est pas valide, on sort de la méthode
+                    return;
                 System.out.println("Entrez la quantité:");
-                quantite = lireChoix(scanner); // Supposons que la quantité est un entier
-                Aliment nouvelAliment = new Aliment();
-                nouvelAliment.setName(nom);
-                nouvelAliment.setQuantity(quantite);
-                restaurant.getStock().addAliment(nouvelAliment);
+                quantite = lireChoix(scanner);
+                // Vérifiez si l'aliment existe déjà
+                Aliment alimentExistant = restaurant.getStock().getAliments().stream()
+                        .filter(a -> a.getName().equalsIgnoreCase(nom))
+                        .findFirst()
+                        .orElse(null);
+                if (alimentExistant != null) {
+                    // Si l'aliment existe déjà, mettez à jour la quantité
+                    alimentExistant.increaseQuantity(quantite);
+                } else {
+                    // Sinon, ajoutez un nouvel aliment
+                    Aliment nouvelAliment = new Aliment();
+                    nouvelAliment.setName(nom);
+                    nouvelAliment.setQuantity(quantite);
+                    restaurant.getStock().addAliment(nouvelAliment);
+                }
                 break;
             case 2:
                 nom = choisirBoisson(scanner);
                 if (nom == null)
-                    return; // Si le nom n'est pas valide, on sort de la méthode
+                    return;
                 System.out.println("Entrez la quantité:");
-                quantite = lireChoix(scanner); // Supposons que la quantité est un entier
-                Boisson nouvelBoisson = new Boisson();
-                nouvelBoisson.setName(nom);
-                nouvelBoisson.setQuantity(quantite);
-                restaurant.getStock().addBoisson(nouvelBoisson);
+                quantite = lireChoix(scanner);
+                // Vérifiez si la boisson existe déjà
+                Boisson boissonExistante = restaurant.getStock().getBoissons().stream()
+                        .filter(b -> b.getNom().equalsIgnoreCase(nom))
+                        .findFirst()
+                        .orElse(null);
+                if (boissonExistante != null) {
+                    // Si la boisson existe déjà, mettez à jour la quantité
+                    boissonExistante.increaseQuantity(quantite);
+                } else {
+                    // Sinon, ajoutez une nouvelle boisson
+                    Boisson nouvelleBoisson = new Boisson();
+                    nouvelleBoisson.setName(nom);
+                    nouvelleBoisson.setQuantity(quantite);
+                    restaurant.getStock().addBoisson(nouvelleBoisson);
+                }
                 break;
             default:
                 System.out.println("Choix non valide.");

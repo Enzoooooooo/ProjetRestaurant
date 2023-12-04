@@ -1,7 +1,3 @@
 1,enzo,20,Barman,false
 2,enwo,30,Cuisinier,false
-3,paul,50,Serveur,false
-4,Ronald,50,Serveur,false
-5,Lionel,50,Serveur,false
-6,Guy,50,Serveur,false
-7,pistache,100,Serveur,false
+1,paul,50,Serveur,false
