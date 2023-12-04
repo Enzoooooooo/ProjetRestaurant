@@ -1,0 +1,3 @@
+Aliment: Salade | Quantité: 2
+Aliment: Saucisson | Quantité: 30
+Boisson: Bierre | Quantité: 20

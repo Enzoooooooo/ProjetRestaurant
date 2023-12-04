@@ -25,7 +25,7 @@ class Boisson {
         this.prix = prix;
     }
 
-    public float getPrix(){
+    public float getPrix() {
         return prix;
     }
 
@@ -38,6 +38,10 @@ class Boisson {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String toString() {
+        return name + " (Quantité: " + quantity + ")";
     }
 
 }
