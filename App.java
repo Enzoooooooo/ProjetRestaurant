@@ -29,61 +29,61 @@ public class App {
         SummerEat.setClean(true);
         try (Scanner scanner = new Scanner(System.in)) {
             if (Employee.gererEmployes(SummerEat, scanner)) {
-           Employee.gererEmployes(SummerEat, scanner);
-            boolean continuer = true;
-            while (continuer) {
-                System.out.println("Quel écran souhaitez vous afficher?");
-                System.out.println("1- Ecran prise de commande");
-                System.out.println("2- Ecran cuisine");
-                System.out.println("3- Ecran bar");
-                System.out.println("4- Ecran Monitoring");
-                System.out.println("5- Assigner une table");
-                System.out.println("6- Quitter");
-                  System.out.println("7- Fin de journée");
-                int choixEcran = lireChoix(scanner);
+                Employee.gererEmployes(SummerEat, scanner);
+                boolean continuer = true;
+                while (continuer) {
+                    System.out.println("Quel écran souhaitez vous afficher?");
+                    System.out.println("1- Ecran prise de commande");
+                    System.out.println("2- Ecran cuisine");
+                    System.out.println("3- Ecran bar");
+                    System.out.println("4- Ecran Monitoring");
+                    System.out.println("5- Assigner une table");
+                    System.out.println("6- Quitter");
+                    System.out.println("7- Fin de journée");
+                    int choixEcran = lireChoix(scanner);
 
-                switch (choixEcran) {
-                    case 1:
-                        gererPriseCommande(SummerEat, scanner);
-                        break;
-                    case 2:
-                        // Logique pour l'écran de cuisine
-                        System.out.println("Affichage de l'écran de cuisine");
-                        ecranCuisine(SummerEat, scanner);
-                        break;
-                    case 3:
-                        // Logique pour l'écran de bar
-                        System.out.println("Affichage de l'écran de bar");
-                        ecranBar(SummerEat, scanner);
-                        break;
-                    case 4:
-                        // Logique pour l'écran de monitoring
-                        gererEcranMonitoring(SummerEat, scanner);
-                        // scanner.close();
-                        break;
-                    case 5:
-                        Table.assignerTable(SummerEat, scanner);
-                        break;
-                    case 6:
-                        System.out.println("Fermeture du programme.");
-                        continuer = false;
-                        break;
-                    case 7:
-                        
-                        Employee.terminerJournee(SummerEat);
-                        continuer = false;
-                        break;
-                    default:
-                        System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
+                    switch (choixEcran) {
+                        case 1:
+                            gererPriseCommande(SummerEat, scanner);
+                            break;
+                        case 2:
+                            // Logique pour l'écran de cuisine
+                            System.out.println("Affichage de l'écran de cuisine");
+                            ecranCuisine(SummerEat, scanner);
+                            break;
+                        case 3:
+                            // Logique pour l'écran de bar
+                            System.out.println("Affichage de l'écran de bar");
+                            ecranBar(SummerEat, scanner);
+                            break;
+                        case 4:
+                            // Logique pour l'écran de monitoring
+                            gererEcranMonitoring(SummerEat, scanner);
+                            // scanner.close();
+                            break;
+                        case 5:
+                            Table.assignerTable(SummerEat, scanner);
+                            break;
+                        case 6:
+                            System.out.println("Fermeture du programme.");
+                            continuer = false;
+                            break;
+                        case 7:
+
+                            Employee.terminerJournee(SummerEat);
+                            continuer = false;
+                            break;
+                        default:
+                            System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
                     }
                 }
-                } else {
-                    System.out.println("Le nombre minimum d'employés requis n'a pas été atteint.");
-                }
-            } catch (Exception e) {
-                System.out.println("Une erreur est survenue : " + e.getMessage());
+            } else {
+                System.out.println("Le nombre minimum d'employés requis n'a pas été atteint.");
             }
+        } catch (Exception e) {
+            System.out.println("Une erreur est survenue : " + e.getMessage());
         }
+    }
 
     private static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
         System.out.println("Ecran Cuisine - Commandes de plats en cours :");
@@ -233,8 +233,8 @@ public class App {
         }
 
         for (int i = 0; i < serveurs.size(); i++) {
-            if (serveurs.get(i).getIsWorking()==true)
-            System.out.println((i + 1) + " - " + serveurs.get(i).getName());
+            if (serveurs.get(i).getIsWorking() == true)
+                System.out.println((i + 1) + " - " + serveurs.get(i).getName());
         }
 
         int choixServeur = lireChoix(scanner);

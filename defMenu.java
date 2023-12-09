@@ -5,6 +5,7 @@ public class defMenu {
         // Créer des plats
         Plat plat1 = new Plat();
         plat1.setName("Salades");
+        plat1.addIngredient("Salade");
         plat1.setPrix(9f);
         menu.ajouterPlat(plat1);
 
