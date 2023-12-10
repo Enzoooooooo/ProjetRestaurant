@@ -251,12 +251,12 @@ class Employee {
     
         for (Employee employe : restaurant.getEmployees()) {
             if(employe.getIsWorking()==false){
-                employe.consecutiveDaysWorked=0;
+                employe.consecutiveDaysWorked=0;   //met à 0 les joures cons"cutif pour les employées au repos
             }else{
-                employe.consecutiveDaysWorked+=1;
+                employe.consecutiveDaysWorked+=1; // incrémente de 1 les jours consécutifs pour ceux qui travaillent
             }
-            employe.setIsWorking(false);
-            restaurant.setClean(true);
+            employe.setIsWorking(false); //mets tout le monde hors de travail
+            restaurant.setClean(true); // nettoie le restaurant
             
             
         }
