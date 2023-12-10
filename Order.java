@@ -40,16 +40,6 @@ class Order {
         return servie;
     }
 
-    /*
-     * public boolean isPret() {
-     * if (platsPrets == true & boissonsPretes == true) {
-     * return true;
-     * } else {
-     * return false;
-     * }
-     * }
-     */
-
     // Constructeur
     public Order(int tableNumber) {
         this.plats = new ArrayList<>();
