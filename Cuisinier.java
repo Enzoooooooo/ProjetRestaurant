@@ -24,8 +24,8 @@ class Cuisinier extends Employee {
 
         System.out.println(
                 "Tous les plats pour la commande de la table " + commande.getTableNumber() + " ont été préparés.");
-        // Marquer la commande comme prête (selon la logique de votre application)
-        commande.setPret(true);
+        // Marquer seulement les plats de la commande comme prêts
+        commande.setPlatsPrets(true);
 
     }
 }

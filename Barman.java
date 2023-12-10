@@ -25,7 +25,7 @@ public class Barman extends Employee {
 
         System.out.println("Toutes les boissons pour la commande de la table " + commande.getTableNumber()
                 + " ont été préparées.");
-        // Marquer la commande comme prête (selon la logique de votre application)
-        commande.setPret(true);
+        // Marquer seulement les boissons de la commande comme prêtes
+        commande.setBoissonsPretes(true);
     }
 }
