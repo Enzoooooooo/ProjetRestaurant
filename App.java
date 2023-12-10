@@ -12,16 +12,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * La classe principale de l'application qui gère l'interface utilisateur et
+ * l'interaction avec le restaurant.
+ */
 public class App {
     public static void main(String[] args) {
-
+        // Création d'une instance de Restaurant chargée avec les données initiales.
         Restaurant SummerEat = new Restaurant();
+        // Charge les employés de employés.txt
         SummerEat.chargerEmployes();
-
         // Initialisation des attributs de Restaurant
-        // SummerEat.setEmployees(new ArrayList<Employee>()); renitialise les employées
-        // si pas commenté
-        // sinon
         SummerEat.setTables(new ArrayList<Table>());
         // Charge mon Stock de stock.txt
         SummerEat.setStock(chargerStock());
@@ -60,7 +61,6 @@ public class App {
                         case 4:
                             // Logique pour l'écran de monitoring
                             gererEcranMonitoring(SummerEat, scanner);
-                            // scanner.close();
                             break;
                         case 5:
                             Table.assignerTable(SummerEat, scanner);
@@ -73,7 +73,7 @@ public class App {
 
                             Employee.terminerJournee(SummerEat);
                             Employee.gererEmployes(SummerEat, scanner);
-                            
+
                             break;
                         default:
                             System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
@@ -87,6 +87,7 @@ public class App {
         }
     }
 
+    // Ecran cuisine
     public static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
@@ -136,7 +137,8 @@ public class App {
                             commandeApreparer.setPlatsPrets(true);
 
                             // Vérifier si la commande est entièrement prête
-                            if (commandeApreparer.getBoissonsPretes()) {
+                            if (commandeApreparer.getBoissons().isEmpty() || commandeApreparer.getBoissonsPretes()) {
+                                commandeApreparer.setBoissonsPretes(true);
                                 commandeApreparer.setPret(true);
                                 System.out.println("La commande pour la table " + numCommande
                                         + " est maintenant prête à être servie.");
@@ -162,6 +164,7 @@ public class App {
         }
     }
 
+    // Selection Cuisinier
     private static Cuisinier selectCuisinier(Restaurant restaurant, Scanner scanner) {
         List<Cuisinier> cuisiniers = restaurant.getEmployees().stream()
                 .filter(e -> e instanceof Cuisinier)
@@ -186,6 +189,7 @@ public class App {
         return cuisiniers.get(choix - 1);
     }
 
+    // Ecran bar
     public static void ecranBar(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
@@ -210,9 +214,7 @@ public class App {
                             // Vérifier que la commande n'est pas servie et que les boissons ne sont pas
                             // encore prêtes
                             if (!commande.isServie() && !commande.getBoissonsPretes()) {
-                                System.out.println("Commande Numéro: " + commande.getTableNumber() + " | Boissons: "
-                                        + commande.getBoissons().toString()); // Affiche le numéro de la commande et les
-                                                                              // boissons
+                                System.out.println("Commande Numéro: " + commande.getTableNumber());
                             }
                         }
                         System.out.println("Entrez le numéro de la commande à préparer:");
@@ -234,7 +236,8 @@ public class App {
                             commandeApreparer.setBoissonsPretes(true);
 
                             // Vérifier si les plats sont déjà prêts
-                            if (commandeApreparer.getPlatsPrets()) {
+                            if (commandeApreparer.getPlats().isEmpty() || commandeApreparer.getPlatsPrets()) {
+                                commandeApreparer.setPlatsPrets(true);
                                 commandeApreparer.setPret(true);
                                 // Logique pour gérer une commande entièrement prête
 
@@ -261,6 +264,7 @@ public class App {
         }
     }
 
+    // Selection Barman
     private static Barman selectBarman(Restaurant restaurant, Scanner scanner) {
         List<Barman> barmans = restaurant.getEmployees().stream()
                 .filter(e -> e instanceof Barman)
@@ -285,6 +289,7 @@ public class App {
         return barmans.get(choix - 1);
     }
 
+    // Menu prise de commande
     private static void gererPriseCommande(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
 
@@ -360,6 +365,7 @@ public class App {
         }
     }
 
+    // Méthode pour sélectionner un serveurs et la prise de commande
     private static void selectionnerServeurEtPrendreCommande(Restaurant restaurant, Scanner scanner) {
         // Affichage et sélection des serveurs
         printHeader("Sélectionnez un serveur :");
@@ -490,6 +496,7 @@ public class App {
         commande.afficherCommande();
     }
 
+    // Ecran monitoring
     private static void gererEcranMonitoring(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
 
@@ -542,6 +549,7 @@ public class App {
         }
     }
 
+    // Méthode pour eviter les erreurs dans les choix
     public static int lireChoix(Scanner scanner) {
         while (!scanner.hasNextInt()) {
             System.out.println("Veuillez entrer un nombre valide.");
@@ -732,6 +740,7 @@ public class App {
         return stock;
     }
 
+    // Méthode pour vérifier et deduire les ingredients
     private static boolean verifierEtDeduireIngredients(Stock stock, Plat plat) {
         for (String ingredientName : plat.getIngredients()) {
             Aliment aliment = stock.getAliments().stream()
@@ -757,6 +766,7 @@ public class App {
         return true;
     }
 
+    // Méthode pour l'affichage des titres dans le terminal
     private static void printHeader(String title) {
         String separator = new String(new char[50]).replace("\0", "*");
         System.out.println(separator);
@@ -764,6 +774,7 @@ public class App {
         System.out.println(separator);
     }
 
+    // Méthode pour l'affichage des differents options dans le terminal
     private static void printOption(String option, int number) {
         System.out.println(String.format("%-3d - %s", number, option));
     }

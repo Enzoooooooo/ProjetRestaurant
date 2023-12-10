@@ -12,9 +12,9 @@ public class Barman extends Employee {
         System.out
                 .println("Préparation des boissons pour la commande de la table " + commande.getTableNumber() + "...");
         for (Boisson boisson : commande.getBoissons()) {
-            // simulé
+
             System.out.println("Préparation de la boisson : " + boisson.getNom());
-            // Simuler un délai (facultatif)
+            // Simuler un délai
             try {
                 Thread.sleep(500); // 0.5 seconde pour la simulation
             } catch (InterruptedException e) {
@@ -27,5 +27,10 @@ public class Barman extends Employee {
                 + " ont été préparées.");
         // Marquer seulement les boissons de la commande comme prêtes
         commande.setBoissonsPretes(true);
+
+        // Vérifier si la commande est prête à être servie
+        if (commande.getPlats().isEmpty() || commande.getPlatsPrets()) {
+            commande.setPret(true);
+        }
     }
 }

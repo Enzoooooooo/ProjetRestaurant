@@ -168,8 +168,4 @@ class Table {
         System.out.println(separator);
     }
 
-    private static void printOption(String option, int number) {
-        System.out.println(String.format("%-3d - %s", number, option));
-    }
-
 }
