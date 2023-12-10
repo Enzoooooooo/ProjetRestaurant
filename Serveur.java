@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 class Serveur extends Employee {
     private List<Integer> tablesAssignees;
-
+    // Un serveur à une liste des tables qui lui sont assignées
     public Serveur() {
         this.tablesAssignees = new ArrayList<>();
     }
@@ -22,6 +22,7 @@ class Serveur extends Employee {
         this.tablesAssignees.remove(Integer.valueOf(numeroTable));
     }
 
+    // Retourner les tables assignée
     public List<Integer> getTablesAssignees() {
         return tablesAssignees;
     }
