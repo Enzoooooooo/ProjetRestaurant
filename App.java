@@ -33,7 +33,7 @@ public class App {
                 boolean continuer = true;
                 while (continuer) {
                     System.out.println("Quel écran souhaitez vous afficher?");
-                    System.out.println("1- Ecran prise de commande");
+                    System.out.println("1- Ecran prise et service de commande");
                     System.out.println("2- Ecran cuisine");
                     System.out.println("3- Ecran bar");
                     System.out.println("4- Ecran Monitoring");
@@ -85,29 +85,81 @@ public class App {
         }
     }
 
-    private static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
-        System.out.println("Ecran Cuisine - Commandes de plats en cours :");
-        List<Order> commandes = restaurant.getOrders().stream()
-                .filter(c -> !c.isPret() && !c.getPlats().isEmpty())
-                .collect(Collectors.toList());
+    public void getCommandesEnAttenteDePlats() {
 
-        for (int i = 0; i < commandes.size(); i++) {
-            System.out.println((i + 1) + " - Commande pour la table " + commandes.get(i).getTableNumber());
-        }
+    }
 
-        System.out.println("Choisissez une commande à préparer (entrez le numéro) :");
-        int choixCommande = lireChoix(scanner) - 1;
+    public static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
+        boolean continuer = true;
+        while (continuer) {
+            System.out.println("Écran Cuisine - Sélectionnez une action:");
+            System.out.println("1 - Préparer les plats d'une commande");
+            System.out.println("2 - Retour");
 
-        if (choixCommande >= 0 && choixCommande < commandes.size()) {
-            Order commande = commandes.get(choixCommande);
+            int choix = scanner.nextInt();
+            switch (choix) {
+                case 1:
+                    // Afficher les commandes en attente de préparation des plats
+                    List<Order> commandes = restaurant.getOrders().stream()
+                            .filter(c -> !c.isPret() && !c.getPlats().isEmpty())
+                            .collect(Collectors.toList());
+                    if (commandes.isEmpty()) {
+                        System.out
+                                .println("Il n'y a actuellement aucune commande en attente de préparation des plats.");
+                    } else {
+                        System.out.println("Commandes en attente de préparation des plats:");
+                        for (Order commande : commandes) {
+                            // Vérifier que la commande n'est pas servie et que les plats ne sont pas encore
+                            // prêts
+                            if (!commande.isServie() && !commande.getPlatsPrets()) {
+                                System.out.println("Commande Numéro: " + commande.getTableNumber() + " | Plats: "
+                                        + commande.getPlats().toString()); // Affiche le numéro de la commande et les
+                                                                           // plats
+                            }
+                        }
 
-            Cuisinier cuisinier = selectCuisinier(restaurant, scanner); // Sélectionner un cuisinier
-            if (cuisinier != null) {
-                cuisinier.preparePlats(commande); // Appeler preparePlats sur l'instance de Cuisinier
-                commande.setPret(true); // Optionnel: Marquer la commande comme prête
+                        System.out.println("Entrez le numéro de la commande à préparer:");
+                        int numCommande = scanner.nextInt();
+
+                        Order commandeApreparer = null;
+                        for (Order c : commandes) {
+                            if (c.getTableNumber() == numCommande) {
+                                commandeApreparer = c;
+                                break;
+                            }
+                        }
+
+                        if (commandeApreparer != null) {
+                            Cuisinier cuisinier = selectCuisinier(restaurant, scanner);
+                            cuisinier.preparePlats(commandeApreparer);
+
+                            // Marquer les plats comme prêts
+                            commandeApreparer.setPlatsPrets(true);
+
+                            // Vérifier si la commande est entièrement prête
+                            if (commandeApreparer.getBoissonsPretes()) {
+                                commandeApreparer.setPret(true);
+                                System.out.println("La commande pour la table " + numCommande
+                                        + " est maintenant prête à être servie.");
+                                // Ajouter ici la logique pour marquer la commande comme servie ou la déplacer
+                                // vers la file des commandes prêtes
+                            } else {
+                                System.out.println("Les plats de la commande pour la table " + numCommande
+                                        + " sont prêts. En attente de préparation des boissons.");
+                            }
+                        } else {
+                            System.out.println("Aucune commande trouvée avec le numéro " + numCommande);
+                        }
+                    }
+                    break;
+
+                case 2:
+                    continuer = false;
+                    break;
+
+                default:
+                    System.out.println("Choix non valide. Veuillez réessayer.");
             }
-        } else {
-            System.out.println("Choix de commande invalide.");
         }
     }
 
@@ -136,11 +188,20 @@ public class App {
         return cuisiniers.get(choix - 1);
     }
 
-    private static void ecranBar(Restaurant restaurant, Scanner scanner) {
-        System.out.println("Ecran Bar - Commandes de boissons en cours :");
-        List<Order> commandes = restaurant.getOrders().stream()
-                .filter(c -> !c.isPret() && !c.getBoissons().isEmpty())
-                .collect(Collectors.toList());
+    public static void ecranBar(Restaurant restaurant, Scanner scanner) {
+        boolean continuer = true;
+        while (continuer) {
+            System.out.println("Écran Bar - Sélectionnez une action:");
+            System.out.println("1 - Préparer les boissons d'une commande");
+            System.out.println("2 - Retour");
+
+            int choix = scanner.nextInt();
+            switch (choix) {
+                case 1:
+                    // Afficher les commandes en attente de préparation des boissons
+                    List<Order> commandes = restaurant.getOrders().stream()
+                            .filter(c -> !c.isPret() && !c.getBoissons().isEmpty())
+                            .collect(Collectors.toList());
 
                     if (commandes.isEmpty()) {
                         System.out.println(
@@ -234,7 +295,7 @@ public class App {
             System.out.println("Ecran Prise de commande");
             System.out.println("1- Afficher le menu");
             System.out.println("2- Sélectionner un serveur pour prendre commande");
-            System.out.println("3- ");
+            System.out.println("3- Servir les commandes prêtes");
             System.out.println("4- Revenir au menu principal");
 
             int choixCommande = lireChoix(scanner);
