@@ -268,33 +268,33 @@ class Employee {
                 employe.incrementConsecutiveDaysWorked();
             }
             employe.setIsWorking(false);
-            System.out.println("Nettoyage du Restaurant en cours ....");
-            try {
-                Thread.sleep(2000); // 1 seconde pour la simulation
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Interruption lors de la préparation du plat.");
-            }
-            System.out.println("Lavage du sol");
-            try {
-                Thread.sleep(1000); // 1 seconde pour la simulation
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Interruption lors de la préparation du plat.");
-            }
-            System.out.println("Rangement de la salle et de la cuisine");
-            try {
-                Thread.sleep(1000); // 1 seconde pour la simulation
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Interruption lors de la préparation du plat.");
-            }
-            System.out.println("Paul a bien nettoyé Summer-Eat !");
-            restaurant.setClean(true);
             if (employe.consecutiveDaysWorked == 4) {
                 employe.consecutiveDaysWorked = 0;
             }
         }
+        System.out.println("Nettoyage du Restaurant en cours ....");
+        try {
+            Thread.sleep(2000); // 1 seconde pour la simulation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Interruption lors de la préparation du plat.");
+        }
+        System.out.println("Lavage du sol");
+        try {
+            Thread.sleep(1000); // 1 seconde pour la simulation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Interruption lors de la préparation du plat.");
+        }
+        System.out.println("Rangement de la salle et de la cuisine");
+        try {
+            Thread.sleep(1000); // 1 seconde pour la simulation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Interruption lors de la préparation du plat.");
+        }
+        System.out.println("Paul a bien nettoyé Summer-Eat !");
+        restaurant.setClean(true);
         restaurant.sauvegarderEmployes();
         System.out.println(
                 "La journée est terminée. Tous les employés sont maintenant hors service, et le Summer-Eat est nettoyé");
