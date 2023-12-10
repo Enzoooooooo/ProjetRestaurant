@@ -27,5 +27,9 @@ class Cuisinier extends Employee {
         // Marquer seulement les plats de la commande comme prêts
         commande.setPlatsPrets(true);
 
+        // Vérifier si la commande est prête à être servie
+        if (commande.getBoissons().isEmpty() || commande.getBoissonsPretes()) {
+            commande.setPret(true);
+        }
     }
 }
