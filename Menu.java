@@ -5,6 +5,7 @@ class Menu {
     private List<Plat> plats;
     private List<Boisson> boissons;
 
+    // Definition du menu
     public Menu() {
         plats = new ArrayList<>();
         boissons = new ArrayList<>();

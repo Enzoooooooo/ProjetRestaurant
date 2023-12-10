@@ -1,12 +1,12 @@
-Aliment: Salade | Quantité: 47
-Aliment: Saucisson | Quantité: 49
-Aliment: Tomate | Quantité: 47
+Aliment: Salade | Quantité: 59
+Aliment: Saucisson | Quantité: 50
+Aliment: Tomate | Quantité: 50
 Aliment: Potirons | Quantité: 50
-Aliment: Champignons | Quantité: 46
-Aliment: Pate | Quantité: 47
-Aliment: Pain | Quantité: 49
-Aliment: Viande | Quantité: 48
-Aliment: Fromage | Quantité: 47
+Aliment: Champignons | Quantité: 50
+Aliment: Pate | Quantité: 50
+Aliment: Pain | Quantité: 50
+Aliment: Viande | Quantité: 50
+Aliment: Fromage | Quantité: 50
 Boisson: Cidre doux | Quantité: 50
 Boisson: Limonade | Quantité: 50
 Boisson: Jus de fruit | Quantité: 50

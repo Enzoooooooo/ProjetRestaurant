@@ -1,6 +1,7 @@
-1,enzo,20,Barman,true
-2,enwo,30,Cuisinier,true
-1,paul,50,Serveur,true
-1,paul2,50,Serveur,true
-1,paul3,50,Serveur,true
-1,paul4,50,Serveur,false
+1,Julien,2000,Cuisinier,false
+2,Paul,1,Serveur,false
+3,Enzo,2000,Barman,false
+4,David,1200,Serveur,false
+5,Camille,1600,Cuisinier,false
+6,Philippe,3000,Cuisinier,false
+7,Emile,1000,Cuisinier,false

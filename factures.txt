@@ -22,3 +22,8 @@ Pizza margharita - 12.0€
 Total à payer: 12.0€
 ------------------------------------
 
+Facture pour la table 1
+Salades - 9.0€
+Total à payer: 9.0€
+------------------------------------
+

@@ -66,9 +66,9 @@ class Restaurant {
         this.clean = clean;
     }
 
-
-    // permet de sauvegarder les ID , les noms les salaires les roles et le statut actuel 
-    //d'un employee dans employee.txt
+    // permet de sauvegarder les ID , les noms les salaires les roles et le statut
+    // actuel
+    // d'un employee dans employee.txt
     public void sauvegarderEmployes() {
         try (PrintWriter out = new PrintWriter("employes.txt")) {
             for (Employee employe : this.getEmployees()) {
@@ -131,7 +131,7 @@ class Restaurant {
 
     public Serveur trouverServeurPourTable(Restaurant restaurant, int tableNumber) {
         for (Employee employe : restaurant.getEmployees()) {
-            if (employe instanceof Serveur) {//recherche parmis tous les employés un serveur disponible
+            if (employe instanceof Serveur) {// recherche parmis tous les employés un serveur disponible
                 Serveur serveur = (Serveur) employe;
                 if (serveur.getTablesAssignees().contains(tableNumber)) {
                     return serveur; // Serveur trouvé
@@ -141,4 +141,55 @@ class Restaurant {
         return null; // Aucun serveur n'est assigné à cette table
     }
 
+    public static void gererEcranMonitoring(Restaurant restaurant, Scanner scanner) {
+        boolean continuer = true;
+
+        while (continuer) {
+            App.printHeader("Ecran Monitoring");
+            App.printOption("Gérer les employés du jour", 1);
+            App.printOption("Ajouter un employé", 2);
+            App.printOption("Supprimer un employé", 3);
+            App.printOption("Ajouter une table", 4);
+            App.printOption("Supprimer une table", 5);
+            App.printOption("Gérer le stock", 6);
+            App.printOption("Retour au menu principal", 7);
+            System.out.println();
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Veuillez entrer un nombre valide.");
+                scanner.next(); // Consomme l'entrée non valide
+                continue; // Continue la boucle pour demander de nouveau l'entrée
+            }
+
+            int choixMonitoring = scanner.nextInt();
+            scanner.nextLine(); // Nettoie le buffer
+
+            switch (choixMonitoring) {
+                case 1:
+                    Employee.gererEmployes(restaurant, scanner);
+                    break;
+                case 2:
+                    Employee.ajouterEmploye(restaurant, scanner);
+                    break;
+                case 3:
+                    Employee.supprimerEmploye(restaurant, scanner);
+                    break;
+                case 4:
+                    Table.ajouterTable(restaurant, scanner);
+                    break;
+                case 5:
+                    Table.supprimerTable(restaurant, scanner);
+                    break;
+                case 6:
+                    Stock.gererStock(restaurant, scanner);
+                    break;
+
+                case 7:
+                    continuer = false; // Sort de la boucle, retour au menu principal
+                    break;
+                default:
+                    System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
+            }
+        }
+    }
 }

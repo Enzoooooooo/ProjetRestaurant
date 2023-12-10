@@ -25,16 +25,17 @@ class Employee {
         return name;
     }
 
-
     // getter pour les jours consécutifss
     public int getConsecutiveDaysWorked() {
         return consecutiveDaysWorked;
     }
-// incrémente un jour de travaille consécutif
+
+    // incrémente un jour de travaille consécutif
     public void incrementConsecutiveDaysWorked() {
         consecutiveDaysWorked++;
     }
-// remet a 0 les jours consécutifs
+
+    // remet a 0 les jours consécutifs
     public void resetConsecutiveDaysWorked() {
         consecutiveDaysWorked = 0;
     }
@@ -120,6 +121,7 @@ class Employee {
 
     }
 
+    // fonction pour verifier si il y a assez d'employés au bon poste
     private static boolean verifierConditionEmployes(Restaurant restaurant) {
         long nbServeurs = restaurant.getEmployees().stream()
                 .filter(e -> e instanceof Serveur && e.getIsWorking())
@@ -131,10 +133,10 @@ class Employee {
                 .filter(e -> e instanceof Barman && e.getIsWorking())
                 .count();
 
-        if (nbServeurs > 2 && nbCuisiniers >= 1 && nbBarmans >= 1) {
+        if (nbServeurs >= 2 && nbCuisiniers >= 4 && nbBarmans >= 1) {
             return true;
         } else {
-            System.out.println("Condition non remplie: 3 serveurs, 1 cuisinier, et 1 barman requis.");
+            System.out.println("Condition non remplie: 2 serveurs, 4 cuisiniers, et 1 barman requis.");
             return false;
         }
     }
@@ -151,6 +153,7 @@ class Employee {
         }
     }
 
+    // Fonction pour decider de quel employés travaillents
     public static boolean gererEmployes(Restaurant restaurant, Scanner scanner) {
         if (restaurant.getEmployees().isEmpty()) {
             System.out.println("Il n'y a pas d'employés à gérer.");
@@ -174,7 +177,8 @@ class Employee {
                 }
             }
 
-            System.out.println("Entrez le numéro de l'employé pour changer son statut de travail, ou 0 pour revenir :");
+            System.out.println(
+                    "Entrez le numéro de l'employé pour changer son statut de travail. Appuyer sur 0 pour valider la sélection");
             int choix = scanner.nextInt();
             scanner.nextLine(); // Nettoyer le buffer après un entier
 
@@ -204,6 +208,7 @@ class Employee {
         }
     }
 
+    // function pour ajouter un employé
     public static void ajouterEmploye(Restaurant restaurant, Scanner scanner) {
         System.out.println("Choisissez le rôle de l'employé :");
         System.out.println("1- Serveur");
@@ -253,6 +258,7 @@ class Employee {
 
     }
 
+    // bien terminer la journée
     public static void terminerJournee(Restaurant restaurant) {
 
         for (Employee employe : restaurant.getEmployees()) {
@@ -262,6 +268,28 @@ class Employee {
                 employe.incrementConsecutiveDaysWorked();
             }
             employe.setIsWorking(false);
+            System.out.println("Nettoyage du Restaurant en cours ....");
+            try {
+                Thread.sleep(2000); // 1 seconde pour la simulation
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Interruption lors de la préparation du plat.");
+            }
+            System.out.println("Lavage du sol");
+            try {
+                Thread.sleep(1000); // 1 seconde pour la simulation
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Interruption lors de la préparation du plat.");
+            }
+            System.out.println("Rangement de la salle et de la cuisine");
+            try {
+                Thread.sleep(1000); // 1 seconde pour la simulation
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Interruption lors de la préparation du plat.");
+            }
+            System.out.println("Paul a bien nettoyé Summer-Eat !");
             restaurant.setClean(true);
             if (employe.consecutiveDaysWorked == 4) {
                 employe.consecutiveDaysWorked = 0;
