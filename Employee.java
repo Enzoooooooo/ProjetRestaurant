@@ -170,7 +170,7 @@ class Employee {
                         + (employe.getIsWorking() ? "Travaille   " : "Ne travaille pas  ") + employe.consecutiveDaysWorked + "jours consécutifs");
             }else{
                  System.out.println((i + 1) + ". " + employe.getName() + " - Role: " + role + " - "
-                        + "ne peux pas travailler");
+                        + "ne peut pas travailler");
             }
         }
 
@@ -183,7 +183,7 @@ class Employee {
             } else if (choix > 0 && choix <= restaurant.getEmployees().size()) {
                 Employee employe = restaurant.getEmployees().get(choix - 1);
                 employe.setIsWorking(!employe.getIsWorking());
-                employe.incrementConsecutiveDaysWorked();
+                
                 restaurant.sauvegarderEmployes(); // Sauvegarde après modification du statut de travail
                 System.out.println("Le statut de travail de " + employe.getName() + " a été changé en "
                         + (employe.getIsWorking() ? "Travaille" : "Ne travaille pas") + employe.consecutiveDaysWorked + "jours consécutifs");
@@ -252,6 +252,8 @@ class Employee {
         for (Employee employe : restaurant.getEmployees()) {
             if(employe.getIsWorking()==false){
                 employe.consecutiveDaysWorked=0;
+            }else{
+                employe.consecutiveDaysWorked+=1;
             }
             employe.setIsWorking(false);
             restaurant.setClean(true);
