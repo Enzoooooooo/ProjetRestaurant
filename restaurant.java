@@ -66,6 +66,9 @@ class Restaurant {
         this.clean = clean;
     }
 
+
+    // permet de sauvegarder les ID , les noms les salaires les roles et le statut actuelle 
+    //d'un employee dans employee.txt
     public void sauvegarderEmployes() {
         try (PrintWriter out = new PrintWriter("employes.txt")) {
             for (Employee employe : this.getEmployees()) {

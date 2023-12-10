@@ -5,18 +5,23 @@ class Stock {
     private List<Aliment> aliments = new ArrayList<>();
     private List<Boisson> boissons = new ArrayList<>();
 
+
+    //ajoute un aliment au stock
     public void addAliment(Aliment aliment) {
         aliments.add(aliment);
     }
 
+    //ajoute une boisson au stock
     public void addBoisson(Boisson boisson) {
         boissons.add(boisson);
     }
 
+    //supprime un aliment au stock
     public void removeAliment(String name) {
         aliments.removeIf(aliment -> aliment.getName().equals(name));
     }
 
+    //supprime une boisson au stock
     public void removeBoisson(String name) {
         boissons.removeIf(boisson -> boisson.getNom().equals(name));
     }

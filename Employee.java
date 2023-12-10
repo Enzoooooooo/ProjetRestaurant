@@ -261,6 +261,7 @@ class Employee {
             }
             employe.setIsWorking(false);
             restaurant.setClean(true);
+
         }
         restaurant.sauvegarderEmployes();
         System.out.println(
