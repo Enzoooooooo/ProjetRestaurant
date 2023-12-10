@@ -67,7 +67,7 @@ class Restaurant {
     }
 
 
-    // permet de sauvegarder les ID , les noms les salaires les roles et le statut actuelle 
+    // permet de sauvegarder les ID , les noms les salaires les roles et le statut actuel 
     //d'un employee dans employee.txt
     public void sauvegarderEmployes() {
         try (PrintWriter out = new PrintWriter("employes.txt")) {
@@ -131,7 +131,7 @@ class Restaurant {
 
     public Serveur trouverServeurPourTable(Restaurant restaurant, int tableNumber) {
         for (Employee employe : restaurant.getEmployees()) {
-            if (employe instanceof Serveur) {
+            if (employe instanceof Serveur) {//recherche parmis tous les employés un serveur disponible
                 Serveur serveur = (Serveur) employe;
                 if (serveur.getTablesAssignees().contains(tableNumber)) {
                     return serveur; // Serveur trouvé

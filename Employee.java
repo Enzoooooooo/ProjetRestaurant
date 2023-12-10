@@ -25,14 +25,16 @@ class Employee {
         return name;
     }
 
+
+    // getter pour les jours consécutifss
     public int getConsecutiveDaysWorked() {
         return consecutiveDaysWorked;
     }
-
+// incrémente un jour de travaille consécutif
     public void incrementConsecutiveDaysWorked() {
         consecutiveDaysWorked++;
     }
-
+// remet a 0 les jours consécutifs
     public void resetConsecutiveDaysWorked() {
         consecutiveDaysWorked = 0;
     }
