@@ -48,8 +48,7 @@ public class App {
                         }
                         break;
                     case 2:
-                        // Logique pour faire les courses (à implémenter)
-                        System.out.println("Logique pour faire les courses (à implémenter)");
+                        verifierStockEtFaireCourses(SummerEat, scanner);
                         break;
                     case 3:
                         System.out.println("Fermeture du programme.");
@@ -392,7 +391,38 @@ public class App {
                         if (commandeAServir != null) {
                             commandeAServir.setServie(true); // Marquer la commande comme servie
                             System.out.println("La commande pour la table " + numCommande + " a été servie.");
+                            // Ici commence la logique de paiement après avoir servi la commande
+                            System.out.println("Total à payer : " + commandeAServir.getTotal() + " €");
+                            printHeader("Mode de paiement");
+                            printOption("Carte bleue", 1);
+                            printOption("Espèces", 2);
+                            int choixPaiement = lireChoix(scanner);
+                            switch (choixPaiement) {
+                                case 1:
+                                    System.out.println("Paiement par carte bleue sélectionné.");
+                                    break;
+                                case 2:
+                                    System.out.println("Paiement en espèces sélectionné.");
+                                    break;
+                                default:
+                                    System.out.println("Choix non valide.");
+                                    break;
+                            }
 
+                            printHeader("Diviser l'addition ?");
+                            printOption("Non", 1);
+                            printOption("Oui", 2);
+                            int choixDivision = lireChoix(scanner);
+                            if (choixDivision == 2) {
+                                System.out.println("En combien de parts souhaitez-vous diviser l'addition ?");
+                                int parts = lireChoix(scanner);
+                                double montantParPart = commandeAServir.getTotal() / parts;
+                                System.out.println(
+                                        "Chaque part doit payer : " + String.format("%.2f", montantParPart) + " €");
+                            } else {
+                                System.out.println("L'addition ne sera pas divisée.");
+                            }
+                            enregistrerFacture(commandeAServir);
                             // Supprimer la commande de la liste des commandes prêtes
                             restaurant.getOrders().remove(commandeAServir);
 
@@ -824,4 +854,68 @@ public class App {
         System.out.println(String.format("%-3d - %s", number, option));
     }
 
+    private static void verifierStockEtFaireCourses(Restaurant restaurant, Scanner scanner) {
+        System.out.println("Vérification des articles à réapprovisionner...");
+
+        Map<String, Integer> articlesAacheter = new HashMap<>();
+        for (Aliment aliment : restaurant.getStock().getAliments()) {
+            if (aliment.getQuantity() < 50) {
+                articlesAacheter.put(aliment.getName(), 50 - aliment.getQuantity());
+            }
+        }
+
+        for (Boisson boisson : restaurant.getStock().getBoissons()) {
+            if (boisson.getQuantity() < 50) {
+                articlesAacheter.put(boisson.getNom(), 50 - boisson.getQuantity());
+            }
+        }
+
+        if (articlesAacheter.isEmpty()) {
+            System.out.println("Le stock est déjà suffisant. Aucun achat nécessaire.");
+            return;
+        }
+
+        System.out.println("Articles à acheter pour réapprovisionner le stock :");
+        articlesAacheter.forEach((article, quantite) -> System.out.println(article + " : " + quantite));
+
+        System.out.println("Voulez-vous acheter ces articles ? (oui/non)");
+        String reponse = scanner.nextLine();
+
+        if (reponse.equalsIgnoreCase("oui")) {
+            for (Map.Entry<String, Integer> article : articlesAacheter.entrySet()) {
+                if (restaurant.getStock().getAliments().stream()
+                        .anyMatch(a -> a.getName().equalsIgnoreCase(article.getKey()))) {
+                    Aliment aliment = restaurant.getStock().getAliments().stream()
+                            .filter(a -> a.getName().equalsIgnoreCase(article.getKey())).findFirst().get();
+                    aliment.setQuantity(aliment.getQuantity() + article.getValue());
+                } else if (restaurant.getStock().getBoissons().stream()
+                        .anyMatch(b -> b.getNom().equalsIgnoreCase(article.getKey()))) {
+                    Boisson boisson = restaurant.getStock().getBoissons().stream()
+                            .filter(b -> b.getNom().equalsIgnoreCase(article.getKey())).findFirst().get();
+                    boisson.setQuantity(boisson.getQuantity() + article.getValue());
+                }
+            }
+            sauvegarderStock(restaurant.getStock());
+            System.out.println("Achat effectué et stock mis à jour.");
+        } else {
+            System.out.println("Achat annulé.");
+        }
+    }
+
+    private static void enregistrerFacture(Order commande) {
+        String nomFichier = "factures.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier, true))) { // true pour mode append
+            writer.write("Facture pour la table " + commande.getTableNumber() + "\n");
+            for (Plat plat : commande.getPlats()) {
+                writer.write(plat.getName() + " - " + plat.getPrix() + "€\n");
+            }
+            for (Boisson boisson : commande.getBoissons()) {
+                writer.write(boisson.getNom() + " - " + boisson.getPrix() + "€\n");
+            }
+            writer.write("Total à payer: " + commande.getTotal() + "€\n");
+            writer.write("------------------------------------\n\n");
+        } catch (IOException e) {
+            System.out.println("Une erreur est survenue lors de l'écriture de la facture : " + e.getMessage());
+        }
+    }
 }
