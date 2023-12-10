@@ -1,14 +1,14 @@
-Aliment: Salade | Quantité: 59
-Aliment: Saucisson | Quantité: 50
-Aliment: Tomate | Quantité: 50
-Aliment: Potirons | Quantité: 50
-Aliment: Champignons | Quantité: 50
-Aliment: Pate | Quantité: 50
-Aliment: Pain | Quantité: 50
-Aliment: Viande | Quantité: 50
-Aliment: Fromage | Quantité: 50
-Boisson: Cidre doux | Quantité: 50
-Boisson: Limonade | Quantité: 50
-Boisson: Jus de fruit | Quantité: 50
-Boisson: Verre d'eau | Quantité: 99999
-Boisson: Biere | Quantité: 50
+Aliment: Salade | Quantitï¿½: 50
+Aliment: Saucisson | Quantitï¿½: 50
+Aliment: Tomate | Quantitï¿½: 50
+Aliment: Potirons | Quantitï¿½: 50
+Aliment: Champignons | Quantitï¿½: 50
+Aliment: Pate | Quantitï¿½: 50
+Aliment: Pain | Quantitï¿½: 50
+Aliment: Viande | Quantitï¿½: 50
+Aliment: Fromage | Quantitï¿½: 50
+Boisson: Cidre doux | Quantitï¿½: 50
+Boisson: Limonade | Quantitï¿½: 50
+Boisson: Jus de fruit | Quantitï¿½: 50
+Boisson: Verre d'eau | Quantitï¿½: 99999
+Boisson: Biere | Quantitï¿½: 50

@@ -1,29 +1,2 @@
-Facture pour la table 1
-Salades - 9.0ï¿½
-Pizza Champignon - 12.0ï¿½
-Total ï¿½ payer: 21.0ï¿½
-------------------------------------
 
-Facture pour la table 2
-Potage potirons - 8.0ï¿½
-Burger (pain viande) - 15.0ï¿½
-Burger (pain Salade  Tomates viande) - 15.0ï¿½
-Jus de fruit - 1.0ï¿½
-Total ï¿½ payer: 39.0ï¿½
-------------------------------------
-
-Facture pour la table 1
-Salades - 9.0ï¿½
-Total ï¿½ payer: 9.0ï¿½
-------------------------------------
-
-Facture pour la table 1
-Pizza margharita - 12.0€
-Total à payer: 12.0€
-------------------------------------
-
-Facture pour la table 1
-Salades - 9.0€
-Total à payer: 9.0€
-------------------------------------
 
