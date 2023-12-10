@@ -1,6 +1,6 @@
-1,enzo,20,Barman,true
-2,enwo,30,Cuisinier,true
-1,paul,50,Serveur,true
-1,paul2,50,Serveur,true
-1,paul3,50,Serveur,true
-1,paul4,50,Serveur,true
+1,enzo,20,Barman,false
+2,enwo,30,Cuisinier,false
+1,paul,50,Serveur,false
+1,paul2,50,Serveur,false
+1,paul3,50,Serveur,false
+1,paul4,50,Serveur,false
