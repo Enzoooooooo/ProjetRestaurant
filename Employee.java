@@ -10,6 +10,8 @@ class Employee {
     public int salaire;
     public String role;
     public boolean isWorking;
+    public int consecutiveDaysWorked = 0;
+
 
     public String getRole() {
         return role;
@@ -22,6 +24,18 @@ class Employee {
     // Getter pour le nom
     public String getName() {
         return name;
+    }
+
+    public int getConsecutiveDaysWorked() {
+        return consecutiveDaysWorked;
+    }
+
+    public void incrementConsecutiveDaysWorked() {
+        consecutiveDaysWorked++;
+    }
+
+    public void resetConsecutiveDaysWorked() {
+        consecutiveDaysWorked = 0;
     }
 
     // Setter pour le nom
