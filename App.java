@@ -27,9 +27,37 @@ public class App {
         SummerEat.setStock(chargerStock());
         SummerEat.setOrders(new ArrayList<Order>());
         SummerEat.setClean(true);
+
         try (Scanner scanner = new Scanner(System.in)) {
-            while (Employee.gererEmployes(SummerEat, scanner) == false) {
-                System.out.println("Veuillez réessayer de gérer les employés.");
+            boolean commencerJournee = false;
+
+            while (!commencerJournee) {
+                printHeader("Bienvenue dans le système de gestion SummerEat");
+                printOption("Commencer la journée - Sélectionner les employés", 1);
+                printOption("Faire les courses", 2);
+                printOption("Quitter", 3);
+                System.out.println();
+
+                int choixInitial = lireChoix(scanner);
+
+                switch (choixInitial) {
+                    case 1:
+                        commencerJournee = Employee.gererEmployes(SummerEat, scanner);
+                        if (!commencerJournee) {
+                            System.out.println("Veuillez réessayer de gérer les employés.");
+                        }
+                        break;
+                    case 2:
+                        // Logique pour faire les courses (à implémenter)
+                        System.out.println("Logique pour faire les courses (à implémenter)");
+                        break;
+                    case 3:
+                        System.out.println("Fermeture du programme.");
+                        System.exit(0); // Sortie immédiate du programme
+                        break;
+                    default:
+                        System.out.println("Choix non valide. Veuillez choisir une option valide.");
+                }
             }
             boolean continuer = true;
             while (continuer) {
@@ -73,6 +101,35 @@ public class App {
                     case 7:
 
                         Employee.terminerJournee(SummerEat);
+                        commencerJournee = false;
+                        while (!commencerJournee) {
+                            printHeader("Bienvenue dans le système de gestion SummerEat");
+                            printOption("Commencer la journée - Sélectionner les employés", 1);
+                            printOption("Faire les courses", 2);
+                            printOption("Quitter", 3);
+                            System.out.println();
+
+                            int choixInitial = lireChoix(scanner);
+
+                            switch (choixInitial) {
+                                case 1:
+                                    commencerJournee = Employee.gererEmployes(SummerEat, scanner);
+                                    if (!commencerJournee) {
+                                        System.out.println("Veuillez réessayer de gérer les employés.");
+                                    }
+                                    break;
+                                case 2:
+                                    // Logique pour faire les courses (à implémenter)
+                                    System.out.println("Logique pour faire les courses (à implémenter)");
+                                    break;
+                                case 3:
+                                    System.out.println("Fermeture du programme.");
+                                    System.exit(0); // Sortie immédiate du programme
+                                    break;
+                                default:
+                                    System.out.println("Choix non valide. Veuillez choisir une option valide.");
+                            }
+                        }
                         while (Employee.gererEmployes(SummerEat, scanner) == false) {
                             System.out.println("Veuillez réessayer de gérer les employés.");
                         }
