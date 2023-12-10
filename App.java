@@ -12,82 +12,81 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * La classe principale de l'application qui gère l'interface utilisateur et
- * l'interaction avec le restaurant.
- */
 public class App {
     public static void main(String[] args) {
-        // Création d'une instance de Restaurant chargée avec les données initiales.
+
         Restaurant SummerEat = new Restaurant();
-        // Charge les employés de employés.txt
         SummerEat.chargerEmployes();
+
         // Initialisation des attributs de Restaurant
+        // SummerEat.setEmployees(new ArrayList<Employee>()); renitialise les employées
+        // si pas commenté
+        // sinon
         SummerEat.setTables(new ArrayList<Table>());
         // Charge mon Stock de stock.txt
         SummerEat.setStock(chargerStock());
         SummerEat.setOrders(new ArrayList<Order>());
         SummerEat.setClean(true);
         try (Scanner scanner = new Scanner(System.in)) {
-            if (Employee.gererEmployes(SummerEat, scanner)) {
-                Employee.gererEmployes(SummerEat, scanner);
-                boolean continuer = true;
-                while (continuer) {
-                    printHeader("Quel écran souhaitez vous afficher?");
-                    printOption("Ecran prise de commande", 1);
-                    printOption("Ecran cuisine", 2);
-                    printOption("Ecran bar", 3);
-                    printOption("Ecran Monitoring", 4);
-                    printOption("Assigner une table", 5);
-                    printOption("Quitter", 6);
-                    printOption("Fin de journée", 7);
-                    System.out.println();
-                    int choixEcran = lireChoix(scanner);
+            while (Employee.gererEmployes(SummerEat, scanner) == false) {
+                System.out.println("Veuillez réessayer de gérer les employés.");
+            }
+            boolean continuer = true;
+            while (continuer) {
+                printHeader("Quel écran souhaitez vous afficher?");
+                printOption("Ecran prise de commande", 1);
+                printOption("Ecran cuisine", 2);
+                printOption("Ecran bar", 3);
+                printOption("Ecran Monitoring", 4);
+                printOption("Assigner une table", 5);
+                printOption("Quitter", 6);
+                printOption("Fin de journée", 7);
+                System.out.println();
+                int choixEcran = lireChoix(scanner);
 
-                    switch (choixEcran) {
-                        case 1:
-                            gererPriseCommande(SummerEat, scanner);
-                            break;
-                        case 2:
-                            // Logique pour l'écran de cuisine
-                            System.out.println("Affichage de l'écran de cuisine");
-                            ecranCuisine(SummerEat, scanner);
-                            break;
-                        case 3:
-                            // Logique pour l'écran de bar
-                            System.out.println("Affichage de l'écran de bar");
-                            ecranBar(SummerEat, scanner);
-                            break;
-                        case 4:
-                            // Logique pour l'écran de monitoring
-                            gererEcranMonitoring(SummerEat, scanner);
-                            break;
-                        case 5:
-                            Table.assignerTable(SummerEat, scanner);
-                            break;
-                        case 6:
-                            System.out.println("Fermeture du programme.");
-                            continuer = false;
-                            break;
-                        case 7:
+                switch (choixEcran) {
+                    case 1:
+                        gererPriseCommande(SummerEat, scanner);
+                        break;
+                    case 2:
+                        // Logique pour l'écran de cuisine
+                        System.out.println("Affichage de l'écran de cuisine");
+                        ecranCuisine(SummerEat, scanner);
+                        break;
+                    case 3:
+                        // Logique pour l'écran de bar
+                        System.out.println("Affichage de l'écran de bar");
+                        ecranBar(SummerEat, scanner);
+                        break;
+                    case 4:
+                        // Logique pour l'écran de monitoring
+                        gererEcranMonitoring(SummerEat, scanner);
+                        // scanner.close();
+                        break;
+                    case 5:
+                        Table.assignerTable(SummerEat, scanner);
+                        break;
+                    case 6:
+                        System.out.println("Fermeture du programme.");
+                        continuer = false;
+                        break;
+                    case 7:
 
-                            Employee.terminerJournee(SummerEat);
-                            Employee.gererEmployes(SummerEat, scanner);
+                        Employee.terminerJournee(SummerEat);
+                        while (Employee.gererEmployes(SummerEat, scanner) == false) {
+                            System.out.println("Veuillez réessayer de gérer les employés.");
+                        }
 
-                            break;
-                        default:
-                            System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
-                    }
+                        break;
+                    default:
+                        System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
                 }
-            } else {
-                System.out.println("Le nombre minimum d'employés requis n'a pas été atteint.");
             }
         } catch (Exception e) {
             System.out.println("Une erreur est survenue : " + e.getMessage());
         }
     }
 
-    // Ecran cuisine
     public static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
@@ -112,9 +111,8 @@ public class App {
                             // Vérifier que la commande n'est pas servie et que les plats ne sont pas encore
                             // prêts
                             if (!commande.isServie() && !commande.getPlatsPrets()) {
-                                System.out.println("Commande Numéro: " + commande.getTableNumber() + " | Plats: "
-                                        + commande.getPlats().toString()); // Affiche le numéro de la commande et les
-                                                                           // plats
+                                System.out.println("Commande Numéro: " + commande.getTableNumber());// Affiche le numéro
+                                                                                                    // de la commande
                             }
                         }
 
@@ -164,7 +162,6 @@ public class App {
         }
     }
 
-    // Selection Cuisinier
     private static Cuisinier selectCuisinier(Restaurant restaurant, Scanner scanner) {
         List<Cuisinier> cuisiniers = restaurant.getEmployees().stream()
                 .filter(e -> e instanceof Cuisinier)
@@ -189,7 +186,6 @@ public class App {
         return cuisiniers.get(choix - 1);
     }
 
-    // Ecran bar
     public static void ecranBar(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
@@ -264,7 +260,6 @@ public class App {
         }
     }
 
-    // Selection Barman
     private static Barman selectBarman(Restaurant restaurant, Scanner scanner) {
         List<Barman> barmans = restaurant.getEmployees().stream()
                 .filter(e -> e instanceof Barman)
@@ -289,7 +284,6 @@ public class App {
         return barmans.get(choix - 1);
     }
 
-    // Menu prise de commande
     private static void gererPriseCommande(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
 
@@ -342,39 +336,6 @@ public class App {
                             commandeAServir.setServie(true); // Marquer la commande comme servie
                             System.out.println("La commande pour la table " + numCommande + " a été servie.");
 
-                            // Ici commence la logique de paiement après avoir servi la commande
-                            System.out.println("Total à payer : " + commandeAServir.getTotal() + " €");
-                            printHeader("Mode de paiement");
-                            printOption("Carte bleue", 1);
-                            printOption("Espèces", 2);
-                            int choixPaiement = lireChoix(scanner);
-                            switch (choixPaiement) {
-                                case 1:
-                                    System.out.println("Paiement par carte bleue sélectionné.");
-                                    break;
-                                case 2:
-                                    System.out.println("Paiement en espèces sélectionné.");
-                                    break;
-                                default:
-                                    System.out.println("Choix non valide.");
-                                    break;
-                            }
-
-                            printHeader("Diviser l'addition ?");
-                            printOption("Non", 1);
-                            printOption("Oui", 2);
-                            int choixDivision = lireChoix(scanner);
-                            if (choixDivision == 2) {
-                                System.out.println("En combien de parts souhaitez-vous diviser l'addition ?");
-                                int parts = lireChoix(scanner);
-                                double montantParPart = commandeAServir.getTotal() / parts;
-                                System.out.println(
-                                        "Chaque part doit payer : " + String.format("%.2f", montantParPart) + " €");
-                            } else {
-                                System.out.println("L'addition ne sera pas divisée.");
-                            }
-
-                            enregistrerFacture(commandeAServir);
                             // Supprimer la commande de la liste des commandes prêtes
                             restaurant.getOrders().remove(commandeAServir);
 
@@ -398,7 +359,6 @@ public class App {
         }
     }
 
-    // Méthode pour sélectionner un serveurs et la prise de commande
     private static void selectionnerServeurEtPrendreCommande(Restaurant restaurant, Scanner scanner) {
         // Affichage et sélection des serveurs
         printHeader("Sélectionnez un serveur :");
@@ -527,10 +487,8 @@ public class App {
         restaurant.getOrders().add(commande);
         System.out.println("Commande enregistrée pour la table " + choixTable + ".");
         commande.afficherCommande();
-
     }
 
-    // Ecran monitoring
     private static void gererEcranMonitoring(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
 
@@ -583,7 +541,6 @@ public class App {
         }
     }
 
-    // Méthode pour eviter les erreurs dans les choix
     public static int lireChoix(Scanner scanner) {
         while (!scanner.hasNextInt()) {
             System.out.println("Veuillez entrer un nombre valide.");
@@ -774,7 +731,6 @@ public class App {
         return stock;
     }
 
-    // Méthode pour vérifier et deduire les ingredients
     private static boolean verifierEtDeduireIngredients(Stock stock, Plat plat) {
         for (String ingredientName : plat.getIngredients()) {
             Aliment aliment = stock.getAliments().stream()
@@ -800,7 +756,6 @@ public class App {
         return true;
     }
 
-    // Méthode pour l'affichage des titres dans le terminal
     private static void printHeader(String title) {
         String separator = new String(new char[50]).replace("\0", "*");
         System.out.println(separator);
@@ -808,26 +763,8 @@ public class App {
         System.out.println(separator);
     }
 
-    // Méthode pour l'affichage des differents options dans le terminal
     private static void printOption(String option, int number) {
         System.out.println(String.format("%-3d - %s", number, option));
-    }
-
-    private static void enregistrerFacture(Order commande) {
-        String nomFichier = "factures.txt";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier, true))) { // true pour mode append
-            writer.write("Facture pour la table " + commande.getTableNumber() + "\n");
-            for (Plat plat : commande.getPlats()) {
-                writer.write(plat.getName() + " - " + plat.getPrix() + "€\n");
-            }
-            for (Boisson boisson : commande.getBoissons()) {
-                writer.write(boisson.getNom() + " - " + boisson.getPrix() + "€\n");
-            }
-            writer.write("Total à payer: " + commande.getTotal() + "€\n");
-            writer.write("------------------------------------\n\n");
-        } catch (IOException e) {
-            System.out.println("Une erreur est survenue lors de l'écriture de la facture : " + e.getMessage());
-        }
     }
 
 }

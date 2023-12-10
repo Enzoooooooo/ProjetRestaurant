@@ -1,4 +1,4 @@
-Aliment: Salade | Quantité: 20
+Aliment: Salade | Quantité: 19
 Aliment: Saucisson | Quantité: 28
 Aliment: Tomate | Quantité: 28
 Aliment: Potirons | Quantité: 27
