@@ -1,0 +1,14 @@
+Facture pour la table 1
+Salades - 9.0€
+Pizza Champignon - 12.0€
+Total à payer: 21.0€
+------------------------------------
+
+Facture pour la table 2
+Potage potirons - 8.0€
+Burger (pain viande) - 15.0€
+Burger (pain Salade  Tomates viande) - 15.0€
+Jus de fruit - 1.0€
+Total à payer: 39.0€
+------------------------------------
+

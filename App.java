@@ -373,6 +373,8 @@ public class App {
                             } else {
                                 System.out.println("L'addition ne sera pas divisée.");
                             }
+
+                            enregistrerFacture(commandeAServir);
                             // Supprimer la commande de la liste des commandes prêtes
                             restaurant.getOrders().remove(commandeAServir);
 
@@ -809,6 +811,23 @@ public class App {
     // Méthode pour l'affichage des differents options dans le terminal
     private static void printOption(String option, int number) {
         System.out.println(String.format("%-3d - %s", number, option));
+    }
+
+    private static void enregistrerFacture(Order commande) {
+        String nomFichier = "factures.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier, true))) { // true pour mode append
+            writer.write("Facture pour la table " + commande.getTableNumber() + "\n");
+            for (Plat plat : commande.getPlats()) {
+                writer.write(plat.getName() + " - " + plat.getPrix() + "€\n");
+            }
+            for (Boisson boisson : commande.getBoissons()) {
+                writer.write(boisson.getNom() + " - " + boisson.getPrix() + "€\n");
+            }
+            writer.write("Total à payer: " + commande.getTotal() + "€\n");
+            writer.write("------------------------------------\n\n");
+        } catch (IOException e) {
+            System.out.println("Une erreur est survenue lors de l'écriture de la facture : " + e.getMessage());
+        }
     }
 
 }
