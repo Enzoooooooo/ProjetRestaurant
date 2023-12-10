@@ -29,6 +29,13 @@ class Plat {
     }
 
     /**
+     * @return List<Aliment> return the aliments
+     */
+    // public List<Aliment> getAliments() {
+    // return aliments;
+    // }
+
+    /**
      * @param aliments the aliments to set
      */
     public void setAliments(List<Aliment> aliments) {

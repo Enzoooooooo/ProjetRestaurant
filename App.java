@@ -121,7 +121,8 @@ public class App {
             System.out.println("Aucun cuisinier disponible.");
             return null;
         }
-        printHeader("Choisissez un cuisinier");
+
+        System.out.println("Choisissez un cuisinier :");
         for (int i = 0; i < cuisiniers.size(); i++) {
             System.out.println((i + 1) + " - " + cuisiniers.get(i).getName());
         }
@@ -211,7 +212,8 @@ public class App {
             System.out.println("Aucun barman disponible.");
             return null;
         }
-        printHeader("Choisissez un barman :");
+
+        System.out.println("Choisissez un barman :");
         for (int i = 0; i < barmans.size(); i++) {
             System.out.println((i + 1) + " - " + barmans.get(i).getName());
         }
@@ -235,7 +237,6 @@ public class App {
             System.out.println("3- ");
             System.out.println("4- Revenir au menu principal");
 
-            System.out.println();
             int choixCommande = lireChoix(scanner);
 
             switch (choixCommande) {
@@ -349,11 +350,10 @@ public class App {
         // Boucle pour ajouter des plats et des boissons à la commande
         boolean prendreCommande = true;
         while (prendreCommande) {
-            printHeader("Ajouter à la commande:");
-            printOption("Plat", 1);
-            printOption("Boisson", 2);
-            printOption("Terminer la commande", 3);
-            System.out.println();
+            System.out.println("Ajouter à la commande:");
+            System.out.println("1 - Plat");
+            System.out.println("2 - Boisson");
+            System.out.println("3 - Terminer la commande");
             int choixCommande = lireChoix(scanner);
 
             switch (choixCommande) {
@@ -433,15 +433,14 @@ public class App {
         boolean continuer = true;
 
         while (continuer) {
-            printHeader("Ecran Monitoring");
-            printOption("Gérer les employés du jour", 1);
-            printOption("Ajouter un employé", 2);
-            printOption("Supprimer un employé", 3);
-            printOption("Ajouter une table", 4);
-            printOption("Supprimer une table", 5);
-            printOption("Gérer le stock", 6);
-            printOption("Retour au menu principal", 7);
-            System.out.println();
+            System.out.println("Ecran Monitoring");
+            System.out.println("1- Gérer les employés du jour");
+            System.out.println("2- Ajouter un employé");
+            System.out.println("3- Supprimer un employé");
+            System.out.println("4- Ajouter une table");
+            System.out.println("5- Supprimer une table");
+            System.out.println("6- Gérer le stock");
+            System.out.println("7- Retour au menu principal");
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Veuillez entrer un nombre valide.");
@@ -495,11 +494,10 @@ public class App {
     private static void gererStock(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
-            printHeader("Gérer le stock");
-            printOption("Ajouter du stock", 1);
-            printOption("Voir le stock", 2);
-            printOption("Retour", 3);
-            System.out.println();
+            System.out.println("Gérer le stock");
+            System.out.println("1- Ajouter du stock");
+            System.out.println("2- Voir le stock");
+            System.out.println("3- Retour");
 
             int choixStock = lireChoix(scanner);
 
@@ -521,10 +519,9 @@ public class App {
 
     // Méthode pour ajouter aux stock
     private static void ajouterAuStock(Restaurant restaurant, Scanner scanner) {
-        printHeader("Voulez-vous ajouter un aliment ou une boisson ?");
-        printOption("Aliment", 1);
-        printOption("Boisson", 2);
-        System.out.println();
+        System.out.println("Voulez-vous ajouter un aliment ou une boisson?");
+        System.out.println("1- Aliment");
+        System.out.println("2- Boisson");
 
         int choix = lireChoix(scanner);
         String nom;
@@ -628,11 +625,11 @@ public class App {
 
     // Méthode pour afficher le stock
     private static void voirStock(Restaurant restaurant) {
-        printHeader("Stock d'aliments :");
+        System.out.println("Stock d'aliments :");
         for (Aliment aliment : restaurant.getStock().getAliments()) {
             System.out.println(aliment);
         }
-        printHeader("Sotck de boissons :");
+        System.out.println("Stock de boissons :");
         for (Boisson boisson : restaurant.getStock().getBoissons()) {
             System.out.println(boisson);
         }
@@ -672,7 +669,6 @@ public class App {
     }
 
     private static boolean verifierEtDeduireIngredients(Stock stock, Plat plat) {
-
         for (String ingredientName : plat.getIngredients()) {
             Aliment aliment = stock.getAliments().stream()
                     .filter(a -> a.getName().equalsIgnoreCase(ingredientName))
@@ -696,16 +692,4 @@ public class App {
 
         return true;
     }
-
-    private static void printHeader(String title) {
-        String separator = new String(new char[50]).replace("\0", "*");
-        System.out.println(separator);
-        System.out.println("*" + String.format("%-48s", title) + "*");
-        System.out.println(separator);
-    }
-
-    private static void printOption(String option, int number) {
-        System.out.println(String.format("%-3d - %s", number, option));
-    }
-
 }

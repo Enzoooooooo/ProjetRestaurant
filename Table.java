@@ -67,14 +67,14 @@ class Table {
                 }
             }
         }
-        printHeader("Tables disponibles :");
+
+        System.out.println("Tables disponibles :");
         for (Table table : restaurant.getTables()) {
             String serveurNom = tableServeurMap.getOrDefault(table.getNumber(), "Aucun serveur");
             System.out.println("Table " + table.getNumber() + " - Serveur: " + serveurNom);
         }
 
         // Demander quel numéro de table supprimer
-        printHeader("Entrez le numéro de la table à supprimer :");
         System.out.println("Entrez le numéro de la table à supprimer :");
         int numeroTable = App.lireChoix(scanner);
 
@@ -107,10 +107,11 @@ class Table {
             System.out.println("Aucun serveur disponible.");
             return;
         }
-        printHeader("Choisissez un serveur :");
+
+        System.out.println("Choisissez un serveur :");
         for (int i = 0; i < serveurs.size(); i++) {
-            if (serveurs.get(i).getIsWorking() == true)
-                System.out.println((i + 1) + " - " + serveurs.get(i).getName());
+            if (serveurs.get(i).getIsWorking()==true)
+            System.out.println((i + 1) + " - " + serveurs.get(i).getName());
         }
 
         int choixServeur = App.lireChoix(scanner);
@@ -122,7 +123,7 @@ class Table {
         Serveur serveurChoisi = serveurs.get(choixServeur - 1);
 
         // Demander le nombre de personnes
-        printHeader("Entrez le nombre de personnes :");
+        System.out.println("Entrez le nombre de personnes :");
         int nombrePersonnes = App.lireChoix(scanner);
 
         // Trouver une table disponible
@@ -146,7 +147,7 @@ class Table {
     }
 
     public static void ajouterTable(Restaurant restaurant, Scanner scanner) {
-        printHeader("Entrez le nombre de sièges pour la nouvelle table :");
+        System.out.println("Entrez le nombre de sièges pour la nouvelle table :");
         int nombreSieges = App.lireChoix(scanner);
 
         Table nouvelleTable = new Table();
@@ -159,17 +160,6 @@ class Table {
 
         restaurant.getTables().add(nouvelleTable);
         System.out.println("Table ajoutée avec succès. Numéro de la table: " + nouveauNumero);
-    }
-
-    private static void printHeader(String title) {
-        String separator = new String(new char[50]).replace("\0", "*");
-        System.out.println(separator);
-        System.out.println("*" + String.format("%-48s", title) + "*");
-        System.out.println(separator);
-    }
-
-    private static void printOption(String option, int number) {
-        System.out.println(String.format("%-3d - %s", number, option));
     }
 
 }
