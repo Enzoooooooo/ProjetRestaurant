@@ -15,6 +15,7 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) {
 
+        int jour = 0;
         Restaurant SummerEat = new Restaurant();
         SummerEat.chargerEmployes();
 
@@ -60,6 +61,9 @@ public class App {
             }
             boolean continuer = true;
             while (continuer) {
+                System.out.println("------------------------");
+                System.out.println("Jour : " + jour);
+                System.out.println("------------------------");
                 printHeader("Quel écran souhaitez vous afficher?");
                 printOption("Ecran prise de commande", 1);
                 printOption("Ecran cuisine", 2);
@@ -101,6 +105,7 @@ public class App {
 
                         Employee.terminerJournee(SummerEat);
                         commencerJournee = false;
+                        jour++;
                         while (!commencerJournee) {
                             printHeader("Bienvenue dans le système de gestion SummerEat");
                             printOption("Commencer la journée - Sélectionner les employés", 1);
