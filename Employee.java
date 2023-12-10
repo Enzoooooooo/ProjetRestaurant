@@ -261,7 +261,9 @@ class Employee {
             }
             employe.setIsWorking(false);
             restaurant.setClean(true);
-
+            if (employe.consecutiveDaysWorked == 4) {
+                employe.consecutiveDaysWorked = 0;
+            }
         }
         restaurant.sauvegarderEmployes();
         System.out.println(
