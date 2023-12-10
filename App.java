@@ -72,7 +72,8 @@ public class App {
                         case 7:
 
                             Employee.terminerJournee(SummerEat);
-                            continuer = false;
+                            Employee.gererEmployes(SummerEat, scanner);
+                            
                             break;
                         default:
                             System.out.println("Choix non valide. Veuillez choisir une option entre 1 et 4.");
