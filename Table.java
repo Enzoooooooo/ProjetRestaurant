@@ -48,10 +48,13 @@ class Table {
     /**
      * @param isAvailable the isAvailable to set
      */
+    
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
 
+
+    // table devient non disponible
     public void ChangeAvailable(boolean isAvailable) {
         this.isAvailable = !isAvailable;
     }
