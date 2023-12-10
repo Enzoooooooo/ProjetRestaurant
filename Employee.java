@@ -165,9 +165,14 @@ class Employee {
             for (int i = 0; i < restaurant.getEmployees().size(); i++) {
                 Employee employe = restaurant.getEmployees().get(i);
                 String role = Employee.determinerRoleEmploye(employe);
+                if(employe.consecutiveDaysWorked != 3){
                 System.out.println((i + 1) + ". " + employe.getName() + " - Role: " + role + " - "
-                        + (employe.getIsWorking() ? "Travaille" : "Ne travaille pas"));
+                        + (employe.getIsWorking() ? "Travaille   " : "Ne travaille pas  ") + employe.consecutiveDaysWorked + "jours consécutifs");
+            }else{
+                 System.out.println((i + 1) + ". " + employe.getName() + " - Role: " + role + " - "
+                        + "ne peux pas travailler");
             }
+        }
 
             System.out.println("Entrez le numéro de l'employé pour changer son statut de travail, ou 0 pour revenir :");
             int choix = scanner.nextInt();
@@ -178,9 +183,10 @@ class Employee {
             } else if (choix > 0 && choix <= restaurant.getEmployees().size()) {
                 Employee employe = restaurant.getEmployees().get(choix - 1);
                 employe.setIsWorking(!employe.getIsWorking());
+                employe.incrementConsecutiveDaysWorked();
                 restaurant.sauvegarderEmployes(); // Sauvegarde après modification du statut de travail
                 System.out.println("Le statut de travail de " + employe.getName() + " a été changé en "
-                        + (employe.getIsWorking() ? "Travaille" : "Ne travaille pas"));
+                        + (employe.getIsWorking() ? "Travaille" : "Ne travaille pas") + employe.consecutiveDaysWorked + "jours consécutifs");
             } else {
                 System.out.println("Choix non valide. Veuillez entrer un numéro correct.");
             }
@@ -244,9 +250,15 @@ class Employee {
  public static void terminerJournee(Restaurant restaurant) {
     
         for (Employee employe : restaurant.getEmployees()) {
+            if(employe.getIsWorking()==false){
+                employe.consecutiveDaysWorked=0;
+            }
             employe.setIsWorking(false);
             restaurant.setClean(true);
+            
+            
         }
+        
         restaurant.sauvegarderEmployes();
         System.out.println("La journée est terminée. Tous les employés sont maintenant hors service, et le Summer-Eat est nettoyé");
     }

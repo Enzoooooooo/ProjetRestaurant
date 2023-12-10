@@ -27,5 +27,10 @@ public class Barman extends Employee {
                 + " ont été préparées.");
         // Marquer seulement les boissons de la commande comme prêtes
         commande.setBoissonsPretes(true);
+
+        // Vérifier si la commande est prête à être servie
+        if (commande.getPlats().isEmpty() || commande.getPlatsPrets()) {
+            commande.setPret(true);
+        }
     }
 }

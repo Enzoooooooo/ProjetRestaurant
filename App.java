@@ -114,8 +114,7 @@ public class App {
                             if (!commande.isServie() && !commande.getPlatsPrets()) {
                                 System.out.println("Commande Numéro: " + commande.getTableNumber() + " | Plats: "
                                         + commande.getPlats().toString()); // Affiche le numéro de la commande et les
-                                                                           // plats.
-
+                                                                           // plats
                             }
                         }
 
@@ -138,7 +137,8 @@ public class App {
                             commandeApreparer.setPlatsPrets(true);
 
                             // Vérifier si la commande est entièrement prête
-                            if (commandeApreparer.getBoissonsPretes()) {
+                            if (commandeApreparer.getBoissons().isEmpty() || commandeApreparer.getBoissonsPretes()) {
+                                commandeApreparer.setBoissonsPretes(true);
                                 commandeApreparer.setPret(true);
                                 System.out.println("La commande pour la table " + numCommande
                                         + " est maintenant prête à être servie.");
@@ -214,9 +214,7 @@ public class App {
                             // Vérifier que la commande n'est pas servie et que les boissons ne sont pas
                             // encore prêtes
                             if (!commande.isServie() && !commande.getBoissonsPretes()) {
-                                System.out.println("Commande Numéro: " + commande.getTableNumber() + " | Boissons: "
-                                        + commande.getBoissons().toString()); // Affiche le numéro de la commande et les
-                                                                              // boissons
+                                System.out.println("Commande Numéro: " + commande.getTableNumber());
                             }
                         }
                         System.out.println("Entrez le numéro de la commande à préparer:");
@@ -238,7 +236,8 @@ public class App {
                             commandeApreparer.setBoissonsPretes(true);
 
                             // Vérifier si les plats sont déjà prêts
-                            if (commandeApreparer.getPlatsPrets()) {
+                            if (commandeApreparer.getPlats().isEmpty() || commandeApreparer.getPlatsPrets()) {
+                                commandeApreparer.setPlatsPrets(true);
                                 commandeApreparer.setPret(true);
                                 // Logique pour gérer une commande entièrement prête
 
