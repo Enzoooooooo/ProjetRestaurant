@@ -32,15 +32,14 @@ public class App {
                 Employee.gererEmployes(SummerEat, scanner);
                 boolean continuer = true;
                 while (continuer) {
-                    printHeader("Quel écran souhaitez vous afficher?");
-                    printOption("Ecran prise de commande", 1);
-                    printOption("Ecran cuisine", 2);
-                    printOption("Ecran bar", 3);
-                    printOption("Ecran Monitoring", 4);
-                    printOption("Assigner une table", 5);
-                    printOption("Quitter", 6);
-                    printOption("Fin de journée", 7);
-                    System.out.println();
+                    System.out.println("Quel écran souhaitez vous afficher?");
+                    System.out.println("1- Ecran prise de commande");
+                    System.out.println("2- Ecran cuisine");
+                    System.out.println("3- Ecran bar");
+                    System.out.println("4- Ecran Monitoring");
+                    System.out.println("5- Assigner une table");
+                    System.out.println("6- Quitter");
+                    System.out.println("7- Fin de journée");
                     int choixEcran = lireChoix(scanner);
 
                     switch (choixEcran) {
@@ -87,7 +86,7 @@ public class App {
     }
 
     private static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
-        printHeader("Ecran Cuisine - Commandes de plats en cours :");
+        System.out.println("Ecran Cuisine - Commandes de plats en cours :");
         List<Order> commandes = restaurant.getOrders().stream()
                 .filter(c -> !c.isPret() && !c.getPlats().isEmpty())
                 .collect(Collectors.toList());
@@ -137,26 +136,68 @@ public class App {
     }
 
     private static void ecranBar(Restaurant restaurant, Scanner scanner) {
-        printHeader("Ecran Bar - Commandes de boissons en cours :");
+        System.out.println("Ecran Bar - Commandes de boissons en cours :");
         List<Order> commandes = restaurant.getOrders().stream()
                 .filter(c -> !c.isPret() && !c.getBoissons().isEmpty())
                 .collect(Collectors.toList());
 
-        for (int i = 0; i < commandes.size(); i++) {
-            System.out.println((i + 1) + " - Commande pour la table " + commandes.get(i).getTableNumber());
-        }
+                    if (commandes.isEmpty()) {
+                        System.out.println(
+                                "Il n'y a actuellement aucune commande en attente de préparation des boissons.");
+                    } else {
+                        System.out.println("Commandes en attente de préparation des boissons:");
+                        for (Order commande : commandes) {
+                            // Vérifier que la commande n'est pas servie et que les boissons ne sont pas
+                            // encore prêtes
+                            if (!commande.isServie() && !commande.getBoissonsPretes()) {
+                                System.out.println("Commande Numéro: " + commande.getTableNumber() + " | Boissons: "
+                                        + commande.getBoissons().toString()); // Affiche le numéro de la commande et les
+                                                                              // boissons
+                            }
+                        }
+                        System.out.println("Entrez le numéro de la commande à préparer:");
+                        int numCommande = scanner.nextInt();
 
-        System.out.println("Choisissez une commande à préparer (entrez le numéro) :");
-        int choixCommande = lireChoix(scanner) - 1;
+                        Order commandeApreparer = null;
+                        for (Order c : commandes) {
+                            if (c.getTableNumber() == numCommande) {
+                                commandeApreparer = c;
+                                break;
+                            }
+                        }
 
-        if (choixCommande >= 0 && choixCommande < commandes.size()) {
-            Order commande = commandes.get(choixCommande);
-            // Vous pouvez ajouter ici une sélection de barman si nécessaire
-            Barman barman = selectBarman(restaurant, scanner); // Méthode à implémenter
-            barman.prepareBoissons(commande); // Logique de préparation des boissons
-            commande.setPret(true); // Marquer la commande comme prête
-        } else {
-            System.out.println("Choix de commande invalide.");
+                        if (commandeApreparer != null) {
+                            Barman barman = selectBarman(restaurant, scanner);
+                            barman.prepareBoissons(commandeApreparer);
+
+                            // Marquer les boissons comme prêtes
+                            commandeApreparer.setBoissonsPretes(true);
+
+                            // Vérifier si les plats sont déjà prêts
+                            if (commandeApreparer.getPlatsPrets()) {
+                                commandeApreparer.setPret(true);
+                                // Logique pour gérer une commande entièrement prête
+
+                                System.out.println("La commande pour la table " + numCommande
+                                        + " est maintenant prête à être servie.");
+                                // Ajouter ici la logique pour marquer la commande comme servie ou la déplacer
+                                // vers la file des commandes prêtes
+                            } else {
+                                System.out.println("Les boissons de la commande pour la table " + numCommande
+                                        + " sont prêtes. En attente de préparation des plats.");
+                            }
+                        } else {
+                            System.out.println("Aucune commande trouvée avec le numéro " + numCommande);
+                        }
+                    }
+                    break;
+                case 2:
+                    continuer = false;
+                    break;
+
+                default:
+                    System.out.println("Choix non valide. Veuillez réessayer.");
+            }
         }
     }
 
@@ -188,11 +229,11 @@ public class App {
         boolean continuer = true;
 
         while (continuer) {
-            printHeader("Ecran Prise de commande");
-            printOption("Afficher le menu", 1);
-            printOption("Sélectionner un serveur pour prendre commande", 2);
-            printOption("", 3);
-            printOption("Revenir au menu principal", 4);
+            System.out.println("Ecran Prise de commande");
+            System.out.println("1- Afficher le menu");
+            System.out.println("2- Sélectionner un serveur pour prendre commande");
+            System.out.println("3- ");
+            System.out.println("4- Revenir au menu principal");
 
             System.out.println();
             int choixCommande = lireChoix(scanner);
@@ -208,7 +249,47 @@ public class App {
                     selectionnerServeurEtPrendreCommande(restaurant, scanner);
                     break;
                 case 3:
-                    // Autres options si nécessaire
+                    List<Order> commandesPretes = restaurant.getOrders().stream()
+                            .filter(Order::isPret) // Filtrer pour obtenir seulement les commandes prêtes
+                            .collect(Collectors.toList());
+
+                    if (commandesPretes.isEmpty()) {
+                        System.out.println("Il n'y a pas de commandes prêtes à être servies.");
+                    } else {
+                        System.out.println("Commandes prêtes à être servies:");
+                        for (Order commande : commandesPretes) {
+                            System.out.println("Commande Numéro: " + commande.getTableNumber());
+                        }
+
+                        System.out.println("Entrez le numéro de la commande à servir:");
+                        int numCommande = scanner.nextInt();
+
+                        // Logique pour trouver la commande spécifique et la marquer comme servie
+                        Order commandeAServir = null;
+                        for (Order c : commandesPretes) {
+                            if (c.getTableNumber() == numCommande) {
+                                commandeAServir = c;
+                                break;
+                            }
+                        }
+
+                        if (commandeAServir != null) {
+                            commandeAServir.setServie(true); // Marquer la commande comme servie
+                            System.out.println("La commande pour la table " + numCommande + " a été servie.");
+
+                            // Supprimer la commande de la liste des commandes prêtes
+                            restaurant.getOrders().remove(commandeAServir);
+
+                            // Si nécessaire, mettre à jour la liste des commandes dans l'objet restaurant
+                            // Cela dépend de la manière dont votre application gère les commandes
+                            // restaurant.setOrders(restaurant.getOrders());
+
+                        } else {
+                            System.out.println("Aucune commande trouvée avec le numéro " + numCommande);
+                        }
+
+                        System.out.println("Commande servie.");
+                    }
                     break;
                 case 4:
                     continuer = false; // Sort de la boucle, retour au menu principal

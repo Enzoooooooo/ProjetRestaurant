@@ -6,10 +6,49 @@ class Order {
     private List<Boisson> boissons;
     private int tableNumber;
     private boolean pret;
+    private boolean platsPrets = false;
+    private boolean boissonsPretes = false;
+    private boolean servie;
 
-    public static void prendreCommande() {
-
+    public void setPlatsPrets(boolean prêt) {
+        this.platsPrets = prêt;
     }
+
+    public void setBoissonsPretes(boolean prêt) {
+        this.boissonsPretes = prêt;
+    }
+
+    public boolean getPlatsPrets() {
+        return platsPrets;
+    }
+
+    public boolean getBoissonsPretes() {
+        return boissonsPretes;
+    }
+
+    public boolean isPret() {
+        return platsPrets && boissonsPretes;
+    }
+
+    // Méthode pour définir si la commande a été servie
+    public void setServie(boolean servie) {
+        this.servie = servie;
+    }
+
+    // Méthode pour obtenir l'état de la commande (servie ou non)
+    public boolean isServie() {
+        return servie;
+    }
+
+    /*
+     * public boolean isPret() {
+     * if (platsPrets == true & boissonsPretes == true) {
+     * return true;
+     * } else {
+     * return false;
+     * }
+     * }
+     */
 
     // Constructeur
     public Order(int tableNumber) {
@@ -36,10 +75,6 @@ class Order {
 
     public void setTableNumber(int tableNumber) {
         this.tableNumber = tableNumber;
-    }
-
-    public boolean isPret() {
-        return pret;
     }
 
     public void setPret(boolean pret) {
