@@ -433,8 +433,14 @@ public class App {
                         System.out.println("Choix de plat non valide.");
                     } else {
                         Plat platChoisi = menu.getPlats().get(choixPlat - 1);
-                        commande.addPlat(platChoisi);
-                        System.out.println(platChoisi.getName() + " ajouté à la commande.");
+                        if (verifierEtDeduireIngredients(restaurant.getStock(), platChoisi)) {
+                            commande.addPlat(platChoisi);
+                            System.out.println(platChoisi.getName() + " ajouté à la commande.");
+                            sauvegarderStock(restaurant.getStock());
+                        } else {
+                            System.out.println("Ingrédients insuffisants pour ajouter " + platChoisi.getName()
+                                    + " à la commande.");
+                        }
                     }
                     break;
 
@@ -453,8 +459,21 @@ public class App {
                         System.out.println("Choix de boisson non valide.");
                     } else {
                         Boisson boissonChoisie = menu.getBoissons().get(choixBoisson - 1);
-                        commande.addBoisson(boissonChoisie);
-                        System.out.println(boissonChoisie.getNom() + " ajoutée à la commande.");
+                        Boisson boissonEnStock = restaurant.getStock().getBoissons().stream()
+                                .filter(b -> b.getNom().equalsIgnoreCase(boissonChoisie.getNom()))
+                                .findFirst()
+                                .orElse(null);
+
+                        if (boissonEnStock != null && boissonEnStock.getQuantity() > 0) {
+                            boissonEnStock.decreaseQuantity(1); // Supposons que chaque commande utilise une unité de
+                                                                // boisson
+                            commande.addBoisson(boissonChoisie);
+                            System.out.println(boissonChoisie.getNom() + " ajoutée à la commande.");
+                            sauvegarderStock(restaurant.getStock()); // Sauvegarder après chaque commande réussie
+                        } else {
+                            System.out.println(
+                                    "Boisson insuffisante pour ajouter " + boissonChoisie.getNom() + " à la commande.");
+                        }
                     }
                     break;
                 case 3:
@@ -641,7 +660,7 @@ public class App {
         System.out.println("Entrez le nom de la boisson:");
         String nom = scanner.nextLine();
         // Liste des boissons valides
-        List<String> nomsValides = Arrays.asList("Jus de fruit", "Bierre", "Limonade", "Cidre");
+        List<String> nomsValides = Arrays.asList("Jus de fruit", "Biere", "Limonade", "Cidre doux", "Verre d'eau");
         if (nomsValides.contains(nom)) {
             return nom;
         } else {
@@ -710,4 +729,28 @@ public class App {
         return stock;
     }
 
+    private static boolean verifierEtDeduireIngredients(Stock stock, Plat plat) {
+        for (String ingredientName : plat.getIngredients()) {
+            Aliment aliment = stock.getAliments().stream()
+                    .filter(a -> a.getName().equalsIgnoreCase(ingredientName))
+                    .findFirst()
+                    .orElse(null);
+
+            // Vérifier si l'ingrédient est présent et en quantité suffisante
+            if (aliment == null || aliment.getQuantity() <= 0) {
+                return false; // Ingrédient manquant ou quantité insuffisante
+            }
+        }
+
+        // Déduire les ingrédients du stock
+        for (String ingredientName : plat.getIngredients()) {
+            Aliment aliment = stock.getAliments().stream()
+                    .filter(a -> a.getName().equalsIgnoreCase(ingredientName))
+                    .findFirst()
+                    .get();
+            aliment.decreaseQuantity(1); // Supposons que chaque plat utilise une unité de chaque ingrédient
+        }
+
+        return true;
+    }
 }

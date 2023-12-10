@@ -1,6 +1,14 @@
-Aliment: Salade | Quantité: 30
-Aliment: Saucisson | Quantité: 30
-Aliment: Tomate | Quantité: 32
+Aliment: Salade | Quantité: 27
+Aliment: Saucisson | Quantité: 29
+Aliment: Tomate | Quantité: 31
 Aliment: Potirons | Quantité: 30
 Aliment: Champignons | Quantité: 30
-Boisson: Bierre | Quantité: 20
+Aliment: Pate | Quantité: 29
+Aliment: Pain | Quantité: 20
+Aliment: Viande | Quantité: 40
+Aliment: Fromage | Quantité: 39
+Boisson: Cidre doux | Quantité: 19
+Boisson: Limonade | Quantité: 20
+Boisson: Jus de fruit | Quantité: 19
+Boisson: Verre d'eau | Quantité: 99999
+Boisson: Biere | Quantité: 29

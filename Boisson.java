@@ -44,4 +44,19 @@ class Boisson {
         return name + " (Quantité: " + quantity + ")";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Boisson boisson = (Boisson) obj;
+        return name != null ? name.equals(boisson.name) : boisson.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
+
 }
