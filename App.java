@@ -32,14 +32,15 @@ public class App {
                 Employee.gererEmployes(SummerEat, scanner);
                 boolean continuer = true;
                 while (continuer) {
-                    System.out.println("Quel écran souhaitez vous afficher?");
-                    System.out.println("1- Ecran prise et service de commande");
-                    System.out.println("2- Ecran cuisine");
-                    System.out.println("3- Ecran bar");
-                    System.out.println("4- Ecran Monitoring");
-                    System.out.println("5- Assigner une table");
-                    System.out.println("6- Quitter");
-                    System.out.println("7- Fin de journée");
+                    printHeader("Quel écran souhaitez vous afficher?");
+                    printOption("Ecran prise de commande", 1);
+                    printOption("Ecran cuisine", 2);
+                    printOption("Ecran bar", 3);
+                    printOption("Ecran Monitoring", 4);
+                    printOption("Assigner une table", 5);
+                    printOption("Quitter", 6);
+                    printOption("Fin de journée", 7);
+                    System.out.println();
                     int choixEcran = lireChoix(scanner);
 
                     switch (choixEcran) {
@@ -85,16 +86,13 @@ public class App {
         }
     }
 
-    public void getCommandesEnAttenteDePlats() {
-
-    }
-
     public static void ecranCuisine(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
-            System.out.println("Écran Cuisine - Sélectionnez une action:");
-            System.out.println("1 - Préparer les plats d'une commande");
-            System.out.println("2 - Retour");
+            printHeader("Ecran Cuisine - Commandes de plats en cours :");
+            printOption("Préparer les plats d'une commande", 1);
+            printOption("Retour", 2);
+            System.out.println();
 
             int choix = scanner.nextInt();
             switch (choix) {
@@ -173,8 +171,7 @@ public class App {
             System.out.println("Aucun cuisinier disponible.");
             return null;
         }
-
-        System.out.println("Choisissez un cuisinier :");
+        printHeader("Choisissez un cuisinier :");
         for (int i = 0; i < cuisiniers.size(); i++) {
             System.out.println((i + 1) + " - " + cuisiniers.get(i).getName());
         }
@@ -191,9 +188,9 @@ public class App {
     public static void ecranBar(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
-            System.out.println("Écran Bar - Sélectionnez une action:");
-            System.out.println("1 - Préparer les boissons d'une commande");
-            System.out.println("2 - Retour");
+            printHeader("Écran Bar - Sélectionnez une action:");
+            printOption("Préparer les boissons d'une commande", 1);
+            printOption("Retour", 2);
 
             int choix = scanner.nextInt();
             switch (choix) {
@@ -273,8 +270,7 @@ public class App {
             System.out.println("Aucun barman disponible.");
             return null;
         }
-
-        System.out.println("Choisissez un barman :");
+        printHeader("Choisissez un barman :");
         for (int i = 0; i < barmans.size(); i++) {
             System.out.println((i + 1) + " - " + barmans.get(i).getName());
         }
@@ -292,11 +288,12 @@ public class App {
         boolean continuer = true;
 
         while (continuer) {
-            System.out.println("Ecran Prise de commande");
-            System.out.println("1- Afficher le menu");
-            System.out.println("2- Sélectionner un serveur pour prendre commande");
-            System.out.println("3- Servir les commandes prêtes");
-            System.out.println("4- Revenir au menu principal");
+            printHeader("Ecran Prise de commande");
+            printOption("Afficher le menu", 1);
+            printOption("Sélectionner un serveur pour prendre commande", 2);
+            printOption("Servir les commandes prêtes", 3);
+            printOption("Revenir au menu principal", 4);
+            System.out.println();
 
             int choixCommande = lireChoix(scanner);
 
@@ -364,7 +361,7 @@ public class App {
 
     private static void selectionnerServeurEtPrendreCommande(Restaurant restaurant, Scanner scanner) {
         // Affichage et sélection des serveurs
-        System.out.println("Sélectionnez un serveur :");
+        printHeader("Sélectionnez un serveur :");
         List<Serveur> serveurs = restaurant.getEmployees().stream()
                 .filter(e -> e instanceof Serveur)
                 .map(e -> (Serveur) e)
@@ -391,7 +388,8 @@ public class App {
         System.out.println("Tables assignées : " + serveurChoisi.getTablesAssignees());
 
         // Choix de la table
-        System.out.println("Choisissez une table pour prendre la commande:");
+        printHeader("Choisissez une table pour prendre la commande:");
+
         int choixTable = lireChoix(scanner);
 
         // Vérifier si la table choisie est dans la liste des tables assignées au
@@ -411,16 +409,17 @@ public class App {
         // Boucle pour ajouter des plats et des boissons à la commande
         boolean prendreCommande = true;
         while (prendreCommande) {
-            System.out.println("Ajouter à la commande:");
-            System.out.println("1 - Plat");
-            System.out.println("2 - Boisson");
-            System.out.println("3 - Terminer la commande");
+            printHeader("Ajouter à la commande:");
+            printOption("Plat", 1);
+            printOption("Boisson", 2);
+            printOption("Terminer la commande", 3);
+            System.out.println();
             int choixCommande = lireChoix(scanner);
 
             switch (choixCommande) {
                 case 1:
                     // Afficher la liste des plats
-                    System.out.println("Liste des plats disponibles :");
+                    printHeader("Liste des plats disponibles :");
                     for (int i = 0; i < menu.getPlats().size(); i++) {
                         Plat plat = menu.getPlats().get(i);
                         System.out.println((i + 1) + " - " + plat.getName() + " : " + plat.getPrix() + " euros");
@@ -446,7 +445,7 @@ public class App {
 
                 case 2:
                     // Afficher la liste des boissons
-                    System.out.println("Liste des boissons disponibles :");
+                    printHeader("Liste des boissons disponibles :");
                     for (int i = 0; i < menu.getBoissons().size(); i++) {
                         Boisson boisson = menu.getBoissons().get(i);
                         System.out.println((i + 1) + " - " + boisson.getNom() + " : " + boisson.getPrix() + " euros");
@@ -494,14 +493,15 @@ public class App {
         boolean continuer = true;
 
         while (continuer) {
-            System.out.println("Ecran Monitoring");
-            System.out.println("1- Gérer les employés du jour");
-            System.out.println("2- Ajouter un employé");
-            System.out.println("3- Supprimer un employé");
-            System.out.println("4- Ajouter une table");
-            System.out.println("5- Supprimer une table");
-            System.out.println("6- Gérer le stock");
-            System.out.println("7- Retour au menu principal");
+            printHeader("Ecran Monitoring");
+            printOption("Gérer les employés du jour", 1);
+            printOption("Ajouter un employé", 2);
+            printOption("Supprimer un employé", 3);
+            printOption("Ajouter une table", 4);
+            printOption("Supprimer une table", 5);
+            printOption("Gérer le stock", 6);
+            printOption("Retour au menu principal", 7);
+            System.out.println();
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Veuillez entrer un nombre valide.");
@@ -555,10 +555,11 @@ public class App {
     private static void gererStock(Restaurant restaurant, Scanner scanner) {
         boolean continuer = true;
         while (continuer) {
-            System.out.println("Gérer le stock");
-            System.out.println("1- Ajouter du stock");
-            System.out.println("2- Voir le stock");
-            System.out.println("3- Retour");
+            printHeader("Gérer le stock");
+            printOption("Ajouter du stock", 1);
+            printOption("Voir le stock", 2);
+            printOption("Retour", 3);
+            System.out.println();
 
             int choixStock = lireChoix(scanner);
 
@@ -580,9 +581,10 @@ public class App {
 
     // Méthode pour ajouter aux stock
     private static void ajouterAuStock(Restaurant restaurant, Scanner scanner) {
-        System.out.println("Voulez-vous ajouter un aliment ou une boisson?");
-        System.out.println("1- Aliment");
-        System.out.println("2- Boisson");
+        printHeader("Voulez-vous ajouter un aliment ou une boisson ?");
+        printOption("Aliment", 1);
+        printOption("Boisson", 2);
+        System.out.println();
 
         int choix = lireChoix(scanner);
         String nom;
@@ -686,11 +688,11 @@ public class App {
 
     // Méthode pour afficher le stock
     private static void voirStock(Restaurant restaurant) {
-        System.out.println("Stock d'aliments :");
+        printHeader("Stock d'aliments :");
         for (Aliment aliment : restaurant.getStock().getAliments()) {
             System.out.println(aliment);
         }
-        System.out.println("Stock de boissons :");
+        printHeader("Stock de boissons:");
         for (Boisson boisson : restaurant.getStock().getBoissons()) {
             System.out.println(boisson);
         }
@@ -753,4 +755,16 @@ public class App {
 
         return true;
     }
+
+    private static void printHeader(String title) {
+        String separator = new String(new char[50]).replace("\0", "*");
+        System.out.println(separator);
+        System.out.println("*" + String.format("%-48s", title) + "*");
+        System.out.println(separator);
+    }
+
+    private static void printOption(String option, int number) {
+        System.out.println(String.format("%-3d - %s", number, option));
+    }
+
 }
